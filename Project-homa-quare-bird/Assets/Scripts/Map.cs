@@ -49,6 +49,7 @@ public class Map : MonoBehaviour
 		}
 
 		block.transform.position = new Vector3(i, .5f + j, 0);
+		block.transform.parent = transform;
 	}
 
 	/*
@@ -72,7 +73,8 @@ public class Map : MonoBehaviour
 				pixelColor = mapDataTex.GetPixel(i, j);
 
 				bool isBlackButNothingAbove = mapDataTex.GetPixel(i, j) == Color.black && mapDataTex.GetPixel(i, j + 1) == Color.white;
-				if (isBlackButNothingAbove)
+				bool topBlock = j == mapDataTex.height - 1;
+				if (isBlackButNothingAbove && !topBlock)
 					pixelColor = Color.green;
 
 				mapData[i, j] = GetBlockTypeByColor(pixelColor);
