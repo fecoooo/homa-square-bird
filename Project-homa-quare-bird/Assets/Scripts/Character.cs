@@ -9,19 +9,23 @@ public class Character : MonoBehaviour
     void Start()
     {
 		rigidbody = GetComponent<Rigidbody>();
-    }
+		
+	}
 
-    void Update()
+	void FixedUpdate()
     {
 		if (Input.GetMouseButtonDown(0))
 		{
-
+			SpawnEgg();
 		}
-    }
+	}
 
 
 	public void SpawnEgg()
 	{
-		GameObject.CreatePrimitive(PrimitiveType.Sphere);
+		transform.position = new Vector3(transform.position.x, transform.position.y + 1.15f, transform.position.z);
+		//GameObject egg = Instantiate(GamePreferences.instance.egg);
+		//egg.transform.position = transform.position;
+
 	}
 }

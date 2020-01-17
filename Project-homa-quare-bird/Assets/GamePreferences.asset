@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee7bb0e796fba2a4aa106994980caa16, type: 3}
+  m_Name: GamePreferences
+  m_EditorClassIdentifier: 
+  egg: {fileID: 1217298017384481990, guid: 9e53c99a698948644bc5317a5d57f59f, type: 3}
+  block: {fileID: 7902947648832780668, guid: 3e8bf9577d730f84691ef7000ff8b7ce, type: 3}
