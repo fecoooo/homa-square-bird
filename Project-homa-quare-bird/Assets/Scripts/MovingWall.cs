@@ -14,6 +14,7 @@ public class MovingWall : MonoBehaviour
 
     void FixedUpdate()
     {
-		transform.Translate(speed, 0, 0);
+		if(GameHandler.instance.CurrentState == GameState.InGame)
+			transform.Translate(speed, 0, 0);
     }
 }

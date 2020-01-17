@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Map : MonoBehaviour
+public class Map : MonoBehaviourSingleton<Map>
 {
 	const string MapDataPath = "Levels/level_";
+
+	public int Width { get; private set; }
+	public int Height { get; private set; }
 
 	BlockType[,] mapData;
 
@@ -22,9 +25,9 @@ public class Map : MonoBehaviour
 	public void Generate(int level)
 	{
 		ReadMapDataFromTexture(level);
-		for (int i = 0; i < mapData.GetLength(0); ++i)
+		for (int i = 0; i < Width; ++i)
 		{
-			for (int j = 0; j < mapData.GetLength(1); ++j)
+			for (int j = 0; j < Height; ++j)
 				InstantiateBlock(i, j);
 		}
 	}
@@ -63,17 +66,21 @@ public class Map : MonoBehaviour
 	void ReadMapDataFromTexture(int level)
 	{
 		Texture2D mapDataTex = Resources.Load<Texture2D>(MapDataPath + level);
-		mapData = new BlockType[mapDataTex.width, mapDataTex.height];
+
+		Width = mapDataTex.width;
+		Height = mapDataTex.height;
+
+		mapData = new BlockType[Width, Height];
 
 		Color pixelColor;
-		for (int i = 0; i < mapDataTex.width; ++i)
+		for (int i = 0; i < Width; ++i)
 		{
-			for (int j = 0; j < mapDataTex.height; ++j)
+			for (int j = 0; j < Height; ++j)
 			{
 				pixelColor = mapDataTex.GetPixel(i, j);
 
 				bool isBlackButNothingAbove = mapDataTex.GetPixel(i, j) == Color.black && mapDataTex.GetPixel(i, j + 1) == Color.white;
-				bool topBlock = j == mapDataTex.height - 1;
+				bool topBlock = j == Height - 1;
 				if (isBlackButNothingAbove && !topBlock)
 					pixelColor = Color.green;
 
