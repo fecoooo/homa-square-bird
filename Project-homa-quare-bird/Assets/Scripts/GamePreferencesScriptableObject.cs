@@ -4,5 +4,8 @@
 public class GamePreferencesScriptableObject: ScriptableObject
 {
 	public GameObject egg;
-	public GameObject block;
+	public GameObject DirtBlock;
+	public GameObject GrassyDirtBlock;
+
+
 }

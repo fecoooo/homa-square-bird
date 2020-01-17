@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: GamePreferences
   m_EditorClassIdentifier: 
   egg: {fileID: 1217298017384481990, guid: 9e53c99a698948644bc5317a5d57f59f, type: 3}
-  block: {fileID: 7902947648832780668, guid: 3e8bf9577d730f84691ef7000ff8b7ce, type: 3}
+  DirtBlock: {fileID: 377878988122545444, guid: 69606154ff43ec3488fec1e13ffa99fc,
+    type: 3}
+  GrassyDirtBlock: {fileID: 4293918773662592195, guid: 55abb9287e277cd4eafedc10d3d10579,
+    type: 3}
