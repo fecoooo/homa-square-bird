@@ -12,17 +12,14 @@ public class Map : MonoBehaviourSingleton<Map>
 
 	BlockType[,] mapData;
 
-	new Rigidbody rigidbody;
-
     void Start()
     {
-		rigidbody = GetComponent<Rigidbody>();
 		Generate(1);
     }
 
-    void FixedUpdate()
+    void Update()
     {
-		rigidbody.MovePosition(new Vector3(rigidbody.position.x - 0.1f, rigidbody.position.y, rigidbody.position.z));
+			
     }
 
 	public void Generate(int level)
