@@ -185,9 +185,9 @@ Rigidbody:
   m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 120
-  m_CollisionDetection: 3
+  m_CollisionDetection: 1
 --- !u!114 &610780836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,8 +200,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fd21280abf33894ab5b981f4f20bf8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 40
-  framesToSpawn: 2
+  jumpForce: 20
+  framesToSpawn: 1
 --- !u!1 &8160410411340885589
 GameObject:
   m_ObjectHideFlags: 0
