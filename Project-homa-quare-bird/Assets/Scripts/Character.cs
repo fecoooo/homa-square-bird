@@ -6,15 +6,20 @@ public class Character : MonoBehaviourSingleton<Character>
 {
 	new Rigidbody rigidbody;
 	public float jumpForce = 10f;
+	public float speed = .2f;
+	bool mouseClick;
 
-    void Start()
-    {
-		rigidbody = GetComponent<Rigidbody>();
+	private void Update()
+	{
+		if(Input.GetMouseButtonDown(0))
+			mouseClick = true;	
 	}
 
 	void FixedUpdate()
     {
-		if (Input.GetMouseButtonDown(0))
+		
+
+		if (mouseClick)
 		{
 			SpawnEgg();
 		}
