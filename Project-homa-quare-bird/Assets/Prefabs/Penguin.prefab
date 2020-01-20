@@ -133,7 +133,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936587561821370}
-  - component: {fileID: 65712882847760486}
+  - component: {fileID: 1223025071}
   - component: {fileID: 54786317403076396}
   - component: {fileID: 610780836}
   m_Layer: 0
@@ -159,8 +159,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &65712882847760486
-BoxCollider:
+--- !u!135 &1223025071
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -170,7 +170,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 1, z: 1}
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &54786317403076396
 Rigidbody:
@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fd21280abf33894ab5b981f4f20bf8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 10
+  jumpForce: 20
 --- !u!1 &6686430357989322761
 GameObject:
   m_ObjectHideFlags: 0
