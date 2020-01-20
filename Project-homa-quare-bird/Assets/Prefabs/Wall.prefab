@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5669796987066542133}
   - component: {fileID: 1935648691}
   - component: {fileID: 1935648692}
-  - component: {fileID: 5669796987066542132}
   - component: {fileID: 2290090539634669964}
   m_Layer: 9
   m_Name: MovingWall
@@ -94,19 +93,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &5669796987066542132
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5669796987066542131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6996f855bfbf8db4c9f239604c757bd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0.1
 --- !u!54 &2290090539634669964
 Rigidbody:
   m_ObjectHideFlags: 0
