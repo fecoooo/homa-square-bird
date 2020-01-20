@@ -9515,6 +9515,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 610780836, guid: 2884e6b071e1c2a4faef2e7fd67b481e, type: 3}
+      propertyPath: jumpForce
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1755646104177140, guid: 2884e6b071e1c2a4faef2e7fd67b481e, type: 3}
       propertyPath: m_Name
       value: Penguin
@@ -9563,6 +9567,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 54786317403076396, guid: 2884e6b071e1c2a4faef2e7fd67b481e,
+        type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 54786317403076396, guid: 2884e6b071e1c2a4faef2e7fd67b481e,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 65712882847760486, guid: 2884e6b071e1c2a4faef2e7fd67b481e,
         type: 3}
       propertyPath: m_Size.y
@@ -9573,6 +9587,12 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 0.7
       objectReference: {fileID: 0}
+    - target: {fileID: 65712882847760486, guid: 2884e6b071e1c2a4faef2e7fd67b481e,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 27c0408a5d12b03489a1bc3827a66ca8,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2884e6b071e1c2a4faef2e7fd67b481e, type: 3}
 --- !u!1 &1249912966
@@ -15020,7 +15040,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 13400000, guid: 30dbfbb81bba85940b7ca3a27d2e991d,
+      objectReference: {fileID: 13400000, guid: 27c0408a5d12b03489a1bc3827a66ca8,
         type: 2}
     - target: {fileID: 5669796987066542133, guid: 916deb2bd5aba8c469f65b13f0ab56cb,
         type: 3}
@@ -15029,3 +15049,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 916deb2bd5aba8c469f65b13f0ab56cb, type: 3}
+--- !u!1 &5669796985712004994 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5669796987066542131, guid: 916deb2bd5aba8c469f65b13f0ab56cb,
+    type: 3}
+  m_PrefabInstance: {fileID: 5669796985712004993}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &5669796985712004995
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5669796985712004994}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3

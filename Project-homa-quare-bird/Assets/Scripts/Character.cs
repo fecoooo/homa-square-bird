@@ -5,11 +5,11 @@ using UnityEngine;
 public class Character : MonoBehaviourSingleton<Character>
 {
 	new Rigidbody rigidbody;
+	public float jumpForce = 10f;
 
     void Start()
     {
 		rigidbody = GetComponent<Rigidbody>();
-		
 	}
 
 	void FixedUpdate()
@@ -23,7 +23,8 @@ public class Character : MonoBehaviourSingleton<Character>
 
 	public void SpawnEgg()
 	{
-		transform.position = new Vector3(transform.position.x, transform.position.y + 1.15f, transform.position.z);
+		rigidbody.velocity = new Vector3(0, jumpForce, 0);
+		//transform.position = new Vector3(transform.position.x, transform.position.y + 1.15f, transform.position.z);
 		//GameObject egg = Instantiate(GamePreferences.instance.egg);
 		//egg.transform.position = transform.position;
 
