@@ -11,6 +11,11 @@ public class Character : PhysicalObject
 	float jumpStep;
 	Vector3 eggSpawnPositionYZ;
 
+	protected Vector3 ForwardTopPoint
+	{
+		get => BottomFrontPoint + new Vector3(0, colldier.size.y, 0);
+	}
+
 	protected override void OnStart()
 	{
 		base.OnStart();
@@ -28,6 +33,9 @@ public class Character : PhysicalObject
 
 	protected override void OnFixedUpdate()
 	{
+		if (!frontCollision)
+			frontCollision = Physics.Raycast(ForwardTopPoint, new Vector3(1, 0, 0), GamePreferences.instance.bottomCheckDistance);
+
 		base.OnFixedUpdate();
 
 		if (currentJumpFrame <= jumpFrames)
@@ -44,5 +52,11 @@ public class Character : PhysicalObject
 		GameObject egg = Instantiate(GamePreferences.instance.egg);
 		float spawnX = transform.position.x + GamePreferences.instance.speed;
 		egg.transform.position = new Vector3(spawnX, eggSpawnPositionYZ.y, eggSpawnPositionYZ.z);
+	}
+
+	protected override void DebugDraw()
+	{
+		base.DebugDraw();
+		Debug.DrawLine(ForwardTopPoint, ForwardTopPoint + new Vector3(1, 0, 0), Color.magenta);
 	}
 }
