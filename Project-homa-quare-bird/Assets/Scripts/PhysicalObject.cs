@@ -76,4 +76,10 @@ public class PhysicalObject:MonoBehaviour
 		if (drawDebug)
 			DebugDraw();
 	}
+
+	protected void ResetProperies()
+	{
+		grounded = false;
+		frontCollision = false;
+	}
 }

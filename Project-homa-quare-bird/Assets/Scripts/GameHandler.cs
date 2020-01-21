@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,13 +22,35 @@ public class GameHandler : MonoBehaviourSingleton<GameHandler>
 		CurrentLevel = PlayerPrefs.GetInt("CurrentLevel", 0);
 
 		GameStateChanged += OnGameStateChanged;
-		GameStateChanged(GameState.Startup);
+		GameStateChanged(GameState.BeforeGame);
 	}
 
 	private void Update()
 	{
 		if (Input.GetMouseButtonDown(0))
-			GameStateChanged(GameState.InGame);
+			OnClick();
+			
+		if(CurrentState == GameState.BeforeGame && Character.instance.Ready && Map.instance.Ready)
+			GameStateChanged(GameState.WaitingForInput);
+	}
+
+	private void OnClick()
+	{
+		switch (CurrentState)
+		{
+			case GameState.WaitingForInput:
+				GameStateChanged(GameState.InGame);
+				break;
+			case GameState.InGame:
+				break;
+			case GameState.GameWon:
+				break;
+			case GameState.GameLost:
+				GameStateChanged(GameState.BeforeGame);
+				break;
+			default:
+				break;
+		}
 	}
 
 	private void OnGameStateChanged(GameState state)
@@ -48,8 +71,8 @@ public class GameHandler : MonoBehaviourSingleton<GameHandler>
 }
 public enum GameState
 {
-	Startup,
 	BeforeGame,
+	WaitingForInput,
 	InGame,
 	GameWon,
 	GameLost,

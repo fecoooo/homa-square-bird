@@ -11,15 +11,25 @@ public class Character : PhysicalObject
 	float jumpStep;
 	Vector3 eggSpawnPositionYZ;
 
+	Vector3 spawnPosition;
+
+	List<GameObject> allEggs = new List<GameObject>();
+
 	protected Vector3 ForwardTopPoint
 	{
 		get => BottomFrontPoint + new Vector3(0, colldier.size.y, 0);
 	}
+	public bool Ready { get; private set; }
 
 	protected override void OnStart()
 	{
 		base.OnStart();
+
+		spawnPosition = transform.position;
+
 		jumpStep = jumpHeight / jumpFrames;
+
+		GameHandler.instance.GameStateChanged += OnGameStateChanged;
 	}
 
 	private void Update()
@@ -75,7 +85,32 @@ public class Character : PhysicalObject
 		}
 
 		transform.position += moveVector;
+	}
 
+	void ResetPosition()
+	{
+		transform.position = spawnPosition;
+	}
+
+	void OnGameStateChanged(GameState state)
+	{
+		switch (state)
+		{
+			case GameState.BeforeGame:
+				ClearEggs();
+				ResetPosition();
+				ResetProperies();
+				Ready = true;
+				break;
+			case GameState.InGame:
+				break;
+			case GameState.GameWon:
+				break;
+			case GameState.GameLost:
+				break;
+			default:
+				break;
+		}
 	}
 
 	public void SpawnEgg()
@@ -83,6 +118,15 @@ public class Character : PhysicalObject
 		GameObject egg = Instantiate(GamePreferences.instance.egg);
 		float spawnX = transform.position.x + GamePreferences.instance.speed;
 		egg.transform.position = new Vector3(spawnX, eggSpawnPositionYZ.y, eggSpawnPositionYZ.z);
+
+		allEggs.Add(egg);
+	}
+
+	void ClearEggs()
+	{
+		foreach (GameObject go in allEggs)
+			Destroy(go);
+		allEggs.Clear();
 	}
 
 	protected override void DebugDraw()

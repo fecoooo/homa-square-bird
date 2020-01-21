@@ -49,13 +49,7 @@ public class UIHandler:MonoBehaviour
 	{
 		switch (state)
 		{
-			case GameState.Startup:
-				InitLevel();
-				break;
 			case GameState.BeforeGame:
-				middleMsgLbl.gameObject.SetActive(true);
-				middleMsgLbl.text = "Tap to start";
-				bottomMsgLbl.gameObject.SetActive(false);
 				InitLevel();
 				break;
 			case GameState.InGame:
@@ -85,6 +79,9 @@ public class UIHandler:MonoBehaviour
 
 		currentStageLbl.text = GameHandler.instance.CurrentLevel.ToString() ;
 		nextStageLbl.text = (GameHandler.instance.CurrentLevel + 1).ToString();
+
+		middleMsgLbl.gameObject.SetActive(true);
+		middleMsgLbl.text = "Tap to start";
 
 		bottomMsgLbl.gameObject.SetActive(false);
 	}

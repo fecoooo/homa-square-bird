@@ -11,17 +11,34 @@ public class Map : MonoBehaviourSingleton<Map>
 
 	public int Width { get; private set; }
 	public int Height { get; private set; }
+	public bool Ready { get; private set; }
 
 	BlockType[,] mapData;
 
     void Start()
     {
-		Generate(1);
-
 		endPlatform = transform.Find("EndPlatform");
-		endPlatform.transform.position = new Vector3(Width, 0, 0);
-    }
+		GameHandler.instance.GameStateChanged += OnGameStateChanged;
+	}
 
+	void OnGameStateChanged(GameState state)
+	{
+		switch (state)
+		{
+			case GameState.BeforeGame:
+				Ready = false;
+				Generate(1);
+				break;
+			case GameState.InGame:
+				break;
+			case GameState.GameWon:
+				break;
+			case GameState.GameLost:
+				break;
+			default:
+				break;
+		}
+	}
 
 	public void Generate(int level)
 	{
@@ -31,6 +48,10 @@ public class Map : MonoBehaviourSingleton<Map>
 			for (int j = 0; j < Height; ++j)
 				InstantiateBlock(i, j);
 		}
+
+		endPlatform.transform.position = new Vector3(Width, 0, 0);
+
+		Ready = true;
 	}
 
 	void InstantiateBlock(int i, int j)
