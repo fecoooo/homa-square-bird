@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Map : MonoBehaviourSingleton<Map>
+public class Map:MonoBehaviourSingleton<Map>
 {
 	const string MapDataPath = "Levels/level_";
+
+	List<GameObject> allBlocks = new List<GameObject>();
 
 	Transform endPlatform;
 
@@ -15,8 +17,8 @@ public class Map : MonoBehaviourSingleton<Map>
 
 	BlockType[,] mapData;
 
-    void Start()
-    {
+	void Start()
+	{
 		endPlatform = transform.Find("EndPlatform");
 		GameHandler.instance.GameStateChanged += OnGameStateChanged;
 	}
@@ -26,14 +28,17 @@ public class Map : MonoBehaviourSingleton<Map>
 		switch (state)
 		{
 			case GameState.BeforeGame:
-				Ready = false;
-				Generate(1);
+				ClearAllBlock();
+				Generate(GameHandler.instance.CurrentLevel);
+				Ready = true;
 				break;
 			case GameState.InGame:
 				break;
 			case GameState.GameWon:
+				Ready = false;
 				break;
 			case GameState.GameLost:
+				Ready = false;
 				break;
 			default:
 				break;
@@ -50,8 +55,6 @@ public class Map : MonoBehaviourSingleton<Map>
 		}
 
 		endPlatform.transform.position = new Vector3(Width, 0, 0);
-
-		Ready = true;
 	}
 
 	void InstantiateBlock(int i, int j)
@@ -75,6 +78,14 @@ public class Map : MonoBehaviourSingleton<Map>
 
 		block.transform.position = new Vector3(i, j, 0);
 		block.transform.parent = transform;
+		allBlocks.Add(block);
+	}
+
+	void ClearAllBlock()
+	{
+		foreach (GameObject go in allBlocks)
+			Destroy(go);
+		allBlocks.Clear();
 	}
 
 	/*

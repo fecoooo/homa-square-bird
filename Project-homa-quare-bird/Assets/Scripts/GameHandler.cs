@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameHandler : MonoBehaviourSingleton<GameHandler>
+public class GameHandler:MonoBehaviourSingleton<GameHandler>
 {
 	public delegate void GameStateChangeHandler(GameState state);
 	public event GameStateChangeHandler GameStateChanged;
@@ -12,13 +12,15 @@ public class GameHandler : MonoBehaviourSingleton<GameHandler>
 
 	public float Progress
 	{
-		get =>	Mathf.Clamp01(Character.instance.transform.position.x / Map.instance.Width);
+		get => Mathf.Clamp01(Character.instance.transform.position.x / Map.instance.Width);
 	}
 
 	public int CurrentLevel { get; private set; }
 
 	private void Start()
 	{
+		PlayerPrefs.DeleteAll();
+
 		CurrentLevel = PlayerPrefs.GetInt("CurrentLevel", 0);
 
 		GameStateChanged += OnGameStateChanged;
@@ -29,8 +31,8 @@ public class GameHandler : MonoBehaviourSingleton<GameHandler>
 	{
 		if (Input.GetMouseButtonDown(0))
 			OnClick();
-			
-		if(CurrentState == GameState.BeforeGame && Character.instance.Ready && Map.instance.Ready)
+
+		if (CurrentState == GameState.BeforeGame && Character.instance.Ready && Map.instance.Ready)
 			GameStateChanged(GameState.WaitingForInput);
 	}
 
@@ -44,6 +46,10 @@ public class GameHandler : MonoBehaviourSingleton<GameHandler>
 			case GameState.InGame:
 				break;
 			case GameState.GameWon:
+				CurrentLevel++;
+				PlayerPrefs.SetInt("CurrentLevel", CurrentLevel);
+				PlayerPrefs.Save();
+				GameStateChanged(GameState.BeforeGame);
 				break;
 			case GameState.GameLost:
 				GameStateChanged(GameState.BeforeGame);

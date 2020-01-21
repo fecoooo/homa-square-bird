@@ -15,10 +15,10 @@ public class UIHandler:MonoBehaviour
 
 	TextMeshProUGUI middleMsgLbl;
 	TextMeshProUGUI bottomMsgLbl;
-	
+
 
 	void Start()
-    {
+	{
 		scoreLbl = transform.Find("ScoreLbl").GetComponent<TextMeshProUGUI>();
 
 		progressBarImg = transform.Find("Progress/ProgressBarImg").GetComponent<Image>();
@@ -29,15 +29,15 @@ public class UIHandler:MonoBehaviour
 
 		middleMsgLbl = transform.Find("MiddleMsgLbl").GetComponent<TextMeshProUGUI>();
 		bottomMsgLbl = transform.Find("BottomMsgLbl").GetComponent<TextMeshProUGUI>();
-		
+
 		GameHandler.instance.GameStateChanged += OnGameStateChanged;
 	}
 
 	void Update()
-    {
-		if(GameHandler.instance.CurrentState == GameState.InGame)
+	{
+		if (GameHandler.instance.CurrentState == GameState.InGame)
 			UpdateProgress();
-    }
+	}
 
 	void UpdateProgress()
 	{
@@ -77,8 +77,8 @@ public class UIHandler:MonoBehaviour
 		progressBarImg.transform.localScale = new Vector3(0, 1, 1);
 		progressLbl.text = "0%";
 
-		currentStageLbl.text = GameHandler.instance.CurrentLevel.ToString() ;
-		nextStageLbl.text = (GameHandler.instance.CurrentLevel + 1).ToString();
+		currentStageLbl.text = (GameHandler.instance.CurrentLevel + 1).ToString();
+		nextStageLbl.text = (GameHandler.instance.CurrentLevel + 2).ToString();
 
 		middleMsgLbl.gameObject.SetActive(true);
 		middleMsgLbl.text = "Tap to start";

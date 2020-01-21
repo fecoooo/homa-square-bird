@@ -105,8 +105,10 @@ public class Character : PhysicalObject
 			case GameState.InGame:
 				break;
 			case GameState.GameWon:
+				Ready = false;
 				break;
 			case GameState.GameLost:
+				Ready = false;
 				break;
 			default:
 				break;
