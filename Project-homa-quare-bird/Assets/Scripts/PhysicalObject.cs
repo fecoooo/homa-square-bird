@@ -38,17 +38,13 @@ public class PhysicalObject:MonoBehaviour
 		OnStart();
 	}
 
-	protected virtual bool EarlyFixedUpdate()
-	{
-		if (GameHandler.instance.CurrentState != GameState.InGame)
-			return false;
-
-		moveVector = Vector3.zero;
-		return true;
-	}
-
 	protected virtual void OnFixedUpdate()
 	{
+		if (GameHandler.instance.CurrentState != GameState.InGame)
+			return;
+
+		moveVector = Vector3.zero;
+
 		if (!frontCollision)
 			frontCollision = Physics.Raycast(ForwardPoint, new Vector3(1, 0, 0), GamePreferences.instance.bottomCheckDistance);
 
@@ -59,20 +55,13 @@ public class PhysicalObject:MonoBehaviour
 
 		if (!grounded)
 			moveVector.y = GamePreferences.instance.gravityPerFrame;
-	}
 
-	protected virtual void LateFixedUpade()
-	{
 		transform.position += moveVector;
 	}
 
 	void FixedUpdate()
 	{
-		if (EarlyFixedUpdate())
-		{
-			OnFixedUpdate();
-			LateFixedUpade();
-		}
+		OnFixedUpdate();
 	}
 
 	protected virtual void DebugDraw()

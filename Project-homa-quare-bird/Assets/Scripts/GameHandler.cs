@@ -35,10 +35,22 @@ public class GameHandler : MonoBehaviourSingleton<GameHandler>
 		CurrentState = state;
 	}
 
+	public void TriggerGameLost()
+	{
+		GameStateChanged(GameState.GameLost);
+	}
+
+	public void TriggerGameWon()
+	{
+		GameStateChanged(GameState.GameWon);
+	}
+
 }
 public enum GameState
 {
 	Startup,
 	BeforeGame,
 	InGame,
+	GameWon,
+	GameLost,
 }

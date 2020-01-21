@@ -36,10 +36,35 @@ public class Character : PhysicalObject
 
 	protected override void OnFixedUpdate()
 	{
-		if (!frontCollision)
-			frontCollision = Physics.Raycast(ForwardTopPoint, new Vector3(1, 0, 0), GamePreferences.instance.bottomCheckDistance);
+		if (GameHandler.instance.CurrentState != GameState.InGame)
+			return;
 
-		base.OnFixedUpdate();
+		moveVector = Vector3.zero;
+
+		if (!frontCollision)
+		{
+			RaycastHit hitInfo;
+
+			frontCollision = Physics.Raycast(ForwardTopPoint, new Vector3(1, 0, 0), out hitInfo, GamePreferences.instance.bottomCheckDistance);
+			if(!frontCollision)
+				frontCollision = Physics.Raycast(ForwardPoint, new Vector3(1, 0, 0), out hitInfo, GamePreferences.instance.bottomCheckDistance);
+
+			if (frontCollision)
+			{
+				if(hitInfo.collider.name == "WinCollider")
+					GameHandler.instance.TriggerGameWon();
+				else
+					GameHandler.instance.TriggerGameLost();
+			}
+		}
+
+		moveVector.x = frontCollision ? 0 : GamePreferences.instance.speed;
+
+		grounded = Physics.Raycast(BottomFrontPoint, Vector3.down, GamePreferences.instance.bottomCheckDistance) ||
+			Physics.Raycast(BottomRearPoint, Vector3.down, GamePreferences.instance.bottomCheckDistance);
+
+		if (!grounded)
+			moveVector.y = GamePreferences.instance.gravityPerFrame;
 
 		if (currentJumpFrame <= jumpFrames)
 		{
@@ -48,6 +73,9 @@ public class Character : PhysicalObject
 				SpawnEgg();
 			currentJumpFrame++;
 		}
+
+		transform.position += moveVector;
+
 	}
 
 	public void SpawnEgg()

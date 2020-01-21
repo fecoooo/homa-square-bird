@@ -13,6 +13,10 @@ public class UIHandler:MonoBehaviour
 	TextMeshProUGUI currentStageLbl;
 	TextMeshProUGUI nextStageLbl;
 
+	TextMeshProUGUI middleMsgLbl;
+	TextMeshProUGUI bottomMsgLbl;
+	
+
 	void Start()
     {
 		scoreLbl = transform.Find("ScoreLbl").GetComponent<TextMeshProUGUI>();
@@ -23,6 +27,9 @@ public class UIHandler:MonoBehaviour
 		currentStageLbl = transform.Find("Progress/CurrentStageLbl").GetComponent<TextMeshProUGUI>();
 		nextStageLbl = transform.Find("Progress/NextStageLbl").GetComponent<TextMeshProUGUI>();
 
+		middleMsgLbl = transform.Find("MiddleMsgLbl").GetComponent<TextMeshProUGUI>();
+		bottomMsgLbl = transform.Find("BottomMsgLbl").GetComponent<TextMeshProUGUI>();
+		
 		GameHandler.instance.GameStateChanged += OnGameStateChanged;
 	}
 
@@ -46,7 +53,23 @@ public class UIHandler:MonoBehaviour
 				InitLevel();
 				break;
 			case GameState.BeforeGame:
+				middleMsgLbl.gameObject.SetActive(true);
+				middleMsgLbl.text = "Tap to start";
+				bottomMsgLbl.gameObject.SetActive(false);
 				InitLevel();
+				break;
+			case GameState.InGame:
+				middleMsgLbl.gameObject.SetActive(false);
+				break;
+			case GameState.GameWon:
+				middleMsgLbl.gameObject.SetActive(true);
+				middleMsgLbl.text = "Level Complete";
+				break;
+			case GameState.GameLost:
+				middleMsgLbl.gameObject.SetActive(true);
+				middleMsgLbl.text = "Game Over";
+				bottomMsgLbl.gameObject.SetActive(true);
+				bottomMsgLbl.text = "Tap to restart";
 				break;
 			default:
 				break;
@@ -62,5 +85,7 @@ public class UIHandler:MonoBehaviour
 
 		currentStageLbl.text = GameHandler.instance.CurrentLevel.ToString() ;
 		nextStageLbl.text = (GameHandler.instance.CurrentLevel + 1).ToString();
+
+		bottomMsgLbl.gameObject.SetActive(false);
 	}
 }
