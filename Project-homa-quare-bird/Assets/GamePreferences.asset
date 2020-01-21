@@ -17,3 +17,4 @@ MonoBehaviour:
     type: 3}
   GrassyDirtBlock: {fileID: 4293918773662592195, guid: 55abb9287e277cd4eafedc10d3d10579,
     type: 3}
+  gravityPerUpdate: -1
