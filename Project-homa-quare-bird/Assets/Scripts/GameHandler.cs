@@ -19,7 +19,7 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 
 	private void Start()
 	{
-		PlayerPrefs.DeleteAll();
+		PlayerPrefs.DeleteKey("CurrentLevel");
 
 		CurrentLevel = PlayerPrefs.GetInt("CurrentLevel", 0);
 
