@@ -59,4 +59,17 @@ public class Character : PhysicalObject
 		base.DebugDraw();
 		Debug.DrawLine(ForwardTopPoint, ForwardTopPoint + new Vector3(1, 0, 0), Color.magenta);
 	}
+
+
+	public static Character instance;
+
+	void Awake()
+	{
+		if (instance != null)
+		{
+			Debug.LogError($"Multiple instances of singleton class: {typeof(Character)}\n");
+			Debug.Break();
+		}
+		instance = this;
+	}
 }
