@@ -7,6 +7,8 @@ public class Map : MonoBehaviourSingleton<Map>
 {
 	const string MapDataPath = "Levels/level_";
 
+	Transform endPlatform;
+
 	public int Width { get; private set; }
 	public int Height { get; private set; }
 
@@ -15,12 +17,11 @@ public class Map : MonoBehaviourSingleton<Map>
     void Start()
     {
 		Generate(1);
+
+		endPlatform = transform.Find("EndPlatform");
+		endPlatform.transform.position = new Vector3(Width, 0, 0);
     }
 
-    void Update()
-    {
-			
-    }
 
 	public void Generate(int level)
 	{
@@ -51,7 +52,7 @@ public class Map : MonoBehaviourSingleton<Map>
 				throw new Exception("No such blocktype defined");
 		}
 
-		block.transform.position = new Vector3(i, .5f + j, 0);
+		block.transform.position = new Vector3(i, j, 0);
 		block.transform.parent = transform;
 	}
 
