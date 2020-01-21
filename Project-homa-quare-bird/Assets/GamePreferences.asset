@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: GamePreferences
   m_EditorClassIdentifier: 
   egg: {fileID: 1217298017384481990, guid: 9e53c99a698948644bc5317a5d57f59f, type: 3}
-  DirtBlock: {fileID: 377878988122545444, guid: 69606154ff43ec3488fec1e13ffa99fc,
+  DirtBlock: {fileID: 8285843699734163249, guid: 25caa5e684dcb0a42bac3e643c169164,
     type: 3}
-  GrassyDirtBlock: {fileID: 4293918773662592195, guid: 55abb9287e277cd4eafedc10d3d10579,
+  GrassyDirtBlock: {fileID: 2784877999618138689, guid: 32b4b751350105c40a4edd0369d6dd31,
     type: 3}
-  gravityPerUpdate: -1
+  gravityPerFrame: -0.1
+  speed: 0.1
+  bottomCheckDistance: 0.15
+  forwardCheckDistance: 0.15
