@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PhysicalObject : MonoBehaviour
+public class PhysicalObject:MonoBehaviour
 {
 	public bool drawDebug = true;
 	public float speed = .1f;
-	public float distanceFromGround = .1f;
+	public float bottomCheckDistance = .15f;
+	public float forwardCheckDistance = .15f;
 
 	protected Vector3 moveVector = new Vector3();
 
@@ -15,16 +16,20 @@ public class PhysicalObject : MonoBehaviour
 
 	protected bool frontCollision;
 
-	protected Vector3 FrontPoint
-	{
-		get => colldier.bounds.center + new Vector3(colldier.bounds.extents.x, -colldier.bounds.extents.y, 0);
-	}
-
-	protected Vector3 RearPoint
+	protected Vector3 BottomRearPoint
 	{
 		get => colldier.bounds.center + new Vector3(-colldier.bounds.extents.x, -colldier.bounds.extents.y, 0);
 	}
 
+	protected Vector3 BottomFrontPoint
+	{
+		get => colldier.bounds.center + new Vector3(colldier.bounds.extents.x, -colldier.bounds.extents.y, 0);
+	}
+
+	protected Vector3 ForwardPoint
+	{
+		get => BottomFrontPoint - new Vector3(0, 1 * GamePreferences.instance.gravityPerFrame, 0);
+	}
 
 	protected virtual void OnStart()
 	{
@@ -36,22 +41,26 @@ public class PhysicalObject : MonoBehaviour
 		OnStart();
 	}
 
-
-
-	protected virtual void EarlyFixedUpdate()
+	protected virtual bool EarlyFixedUpdate()
 	{
 		if (GameHandler.instance.CurrentState != GameState.InGame)
-			return;
+			return false;
 
 		moveVector = Vector3.zero;
+		return true;
 	}
 
 	protected virtual void OnFixedUpdate()
 	{
-		moveVector.x = speed;
+		if (!frontCollision)
+		{
+			frontCollision = Physics.Raycast(ForwardPoint, new Vector3(1, 0, 0), bottomCheckDistance);
+			//TODO: place to proper location (where not intersecting with other)
+			if (!frontCollision)
+				moveVector.x = speed;
+		}
 
-		frontCollision = Physics.Raycast(FrontPoint, Vector3.forward, distanceFromGround);
-		grounded = Physics.Raycast(FrontPoint, Vector3.down, distanceFromGround) || Physics.Raycast(RearPoint, Vector3.down, distanceFromGround);
+		grounded = Physics.Raycast(BottomFrontPoint, Vector3.down, bottomCheckDistance) || Physics.Raycast(BottomRearPoint, Vector3.down, bottomCheckDistance);
 
 		if (!grounded)
 			moveVector.y = GamePreferences.instance.gravityPerFrame;
@@ -64,18 +73,20 @@ public class PhysicalObject : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		EarlyFixedUpdate();
-		OnFixedUpdate();
-		LateFixedUpade();
+		if (EarlyFixedUpdate())
+		{
+			OnFixedUpdate();
+			LateFixedUpade();
+		}
 	}
 
 	private void LateUpdate()
 	{
 		if (drawDebug)
 		{
-			Debug.DrawLine(RearPoint, RearPoint - new Vector3(0, 1, 0), Color.red);
-			Debug.DrawLine(FrontPoint, FrontPoint - new Vector3(0, 1, 0), Color.blue);
-			Debug.DrawLine(FrontPoint, FrontPoint + new Vector3(1, 0, 0), Color.green);
+			Debug.DrawLine(BottomRearPoint, BottomRearPoint - new Vector3(0, 1, 0), Color.red);
+			Debug.DrawLine(BottomFrontPoint, BottomFrontPoint - new Vector3(0, 1, 0), Color.blue);
+			Debug.DrawLine(ForwardPoint, ForwardPoint + new Vector3(1, 0, 0), Color.green);
 		}
 	}
 }
