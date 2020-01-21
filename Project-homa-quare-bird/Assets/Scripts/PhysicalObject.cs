@@ -50,16 +50,9 @@ public class PhysicalObject:MonoBehaviour
 	protected virtual void OnFixedUpdate()
 	{
 		if (!frontCollision)
-		{
 			frontCollision = Physics.Raycast(ForwardPoint, new Vector3(1, 0, 0), GamePreferences.instance.bottomCheckDistance);
-			//TODO: place to proper location (where not intersecting with other)
-			if (!frontCollision)
-				moveVector.x = GamePreferences.instance.speed;
-			else
-			{
 
-			}
-		}
+		moveVector.x = frontCollision ?  0 : GamePreferences.instance.speed;
 
 		grounded = Physics.Raycast(BottomFrontPoint, Vector3.down, GamePreferences.instance.bottomCheckDistance) || 
 			Physics.Raycast(BottomRearPoint, Vector3.down, GamePreferences.instance.bottomCheckDistance);
@@ -82,13 +75,16 @@ public class PhysicalObject:MonoBehaviour
 		}
 	}
 
+	protected virtual void DebugDraw()
+	{
+		Debug.DrawLine(BottomRearPoint, BottomRearPoint - new Vector3(0, 1, 0), Color.red);
+		Debug.DrawLine(BottomFrontPoint, BottomFrontPoint - new Vector3(0, 1, 0), Color.blue);
+		Debug.DrawLine(ForwardPoint, ForwardPoint + new Vector3(1, 0, 0), Color.green);
+	}
+
 	private void LateUpdate()
 	{
 		if (drawDebug)
-		{
-			Debug.DrawLine(BottomRearPoint, BottomRearPoint - new Vector3(0, 1, 0), Color.red);
-			Debug.DrawLine(BottomFrontPoint, BottomFrontPoint - new Vector3(0, 1, 0), Color.blue);
-			Debug.DrawLine(ForwardPoint, ForwardPoint + new Vector3(1, 0, 0), Color.green);
-		}
+			DebugDraw();
 	}
 }
