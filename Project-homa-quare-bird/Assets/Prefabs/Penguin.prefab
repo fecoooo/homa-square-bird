@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 430964915}
   - component: {fileID: 430964914}
   - component: {fileID: 430964913}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -133,10 +133,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936587561821370}
-  - component: {fileID: 1223025071}
-  - component: {fileID: 54786317403076396}
   - component: {fileID: 610780836}
-  m_Layer: 0
+  - component: {fileID: 299852928}
+  m_Layer: 10
   m_Name: Penguin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,35 +158,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1223025071
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1755646104177140}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &54786317403076396
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1755646104177140}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 120
-  m_CollisionDetection: 1
 --- !u!114 &610780836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +170,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fd21280abf33894ab5b981f4f20bf8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 20
+  drawDebug: 1
+  jumpFrames: 5
+--- !u!65 &299852928
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755646104177140}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6686430357989322761
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,7 +196,7 @@ GameObject:
   - component: {fileID: 2775309250352298730}
   - component: {fileID: 1305080798513166688}
   - component: {fileID: 8015669734659607488}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -5,9 +5,6 @@ using UnityEngine;
 public class PhysicalObject:MonoBehaviour
 {
 	public bool drawDebug = true;
-	public float speed = .1f;
-	public float bottomCheckDistance = .15f;
-	public float forwardCheckDistance = .15f;
 
 	protected Vector3 moveVector = new Vector3();
 
@@ -54,13 +51,18 @@ public class PhysicalObject:MonoBehaviour
 	{
 		if (!frontCollision)
 		{
-			frontCollision = Physics.Raycast(ForwardPoint, new Vector3(1, 0, 0), bottomCheckDistance);
+			frontCollision = Physics.Raycast(ForwardPoint, new Vector3(1, 0, 0), GamePreferences.instance.bottomCheckDistance);
 			//TODO: place to proper location (where not intersecting with other)
 			if (!frontCollision)
-				moveVector.x = speed;
+				moveVector.x = GamePreferences.instance.speed;
+			else
+			{
+
+			}
 		}
 
-		grounded = Physics.Raycast(BottomFrontPoint, Vector3.down, bottomCheckDistance) || Physics.Raycast(BottomRearPoint, Vector3.down, bottomCheckDistance);
+		grounded = Physics.Raycast(BottomFrontPoint, Vector3.down, GamePreferences.instance.bottomCheckDistance) || 
+			Physics.Raycast(BottomRearPoint, Vector3.down, GamePreferences.instance.bottomCheckDistance);
 
 		if (!grounded)
 			moveVector.y = GamePreferences.instance.gravityPerFrame;
