@@ -7,7 +7,7 @@ public class Character : PhysicalObject
 {
 	public int jumpFrames;
 	public float jumpHeight = 1f;
-	int currentJumpFrame;
+	int currentJumpFrame = int.MaxValue;
 	float jumpStep;
 	Vector3 eggSpawnPositionYZ;
 
@@ -24,6 +24,9 @@ public class Character : PhysicalObject
 
 	private void Update()
 	{
+		if (GameHandler.instance.CurrentState != GameState.InGame)
+			return;
+
 		if (Input.GetMouseButtonDown(0))
 		{
 			eggSpawnPositionYZ = transform.position;
