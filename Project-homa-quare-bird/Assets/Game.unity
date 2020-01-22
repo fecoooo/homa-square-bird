@@ -3027,6 +3027,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 610780836, guid: 2884e6b071e1c2a4faef2e7fd67b481e, type: 3}
+      propertyPath: jumpFrames
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 610780836, guid: 2884e6b071e1c2a4faef2e7fd67b481e, type: 3}
+      propertyPath: jumpHeight
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 1755646104177140, guid: 2884e6b071e1c2a4faef2e7fd67b481e, type: 3}
       propertyPath: m_Name
       value: Character
