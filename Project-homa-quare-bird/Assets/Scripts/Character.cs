@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +17,7 @@ public class Character : PhysicalObject
 
 	protected Vector3 TopForwardPoint
 	{
-		get => MiddleFrontPoint + new Vector3(0, colldier.bounds.extents.y + GamePreferences.instance.gravityPerFrame, 0);
+		get => MiddleFrontPoint + new Vector3(0, collider.bounds.extents.y + GamePreferences.instance.gravityPerFrame, 0);
 	}
 	public bool Ready { get; private set; }
 

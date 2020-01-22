@@ -9,29 +9,29 @@ public class PhysicalObject:MonoBehaviour
 
 	protected Vector3 nextMovePos = new Vector3();
 
-	protected BoxCollider colldier;
+	protected BoxCollider collider;
 
 	protected bool frontCollision;
 	protected bool shouldUpdate;
 
 	protected Vector3 MiddleRearPoint
 	{
-		get => colldier.bounds.center - new Vector3(colldier.bounds.extents.x, 0, 0);
+		get => collider.bounds.center - new Vector3(collider.bounds.extents.x, 0, 0);
 	}
 
 	protected Vector3 MiddleFrontPoint
 	{
-		get => colldier.bounds.center + new Vector3(colldier.bounds.extents.x, 0, 0);
+		get => collider.bounds.center + new Vector3(collider.bounds.extents.x, 0, 0);
 	}
 
 	protected Vector3 BottomForwardPoint
 	{
-		get => colldier.bounds.center + new Vector3(colldier.bounds.extents.x, -colldier.bounds.extents.y - GamePreferences.instance.gravityPerFrame, 0);
+		get => collider.bounds.center + new Vector3(collider.bounds.extents.x, -collider.bounds.extents.y - GamePreferences.instance.gravityPerFrame, 0);
 	}
 
 	protected virtual void OnStart()
 	{
-		colldier = GetComponent<BoxCollider>();
+		collider = GetComponent<BoxCollider>();
 	}
 
 	void Start()
@@ -77,9 +77,9 @@ public class PhysicalObject:MonoBehaviour
 		//BottomFrontPoint
 		if (Physics.Raycast(MiddleFrontPoint, Vector3.down, out hitInfo1, .5f))
 		{
-			if (hitInfo1.collider.bounds.Intersects(colldier.bounds))
+			if (hitInfo1.collider.bounds.Intersects(collider.bounds))
 			{
-				float possibleNewY = hitInfo1.collider.bounds.max.y + colldier.bounds.extents.y;
+				float possibleNewY = hitInfo1.collider.bounds.max.y + collider.bounds.extents.y;
 				nextMovePos.y = possibleNewY > nextMovePos.y ? possibleNewY : nextMovePos.y;
 			}
 		}
@@ -87,9 +87,9 @@ public class PhysicalObject:MonoBehaviour
 		//BottomRearPoint
 		if (Physics.Raycast(MiddleRearPoint, Vector3.down, out hitInfo2, .5f))
 		{
-			if (hitInfo2.collider.bounds.Intersects(colldier.bounds))
+			if (hitInfo2.collider.bounds.Intersects(collider.bounds))
 			{
-				float possibleNewY = hitInfo2.collider.bounds.max.y + colldier.bounds.extents.y;
+				float possibleNewY = hitInfo2.collider.bounds.max.y + collider.bounds.extents.y;
 				nextMovePos.y = possibleNewY > nextMovePos.y ? possibleNewY : nextMovePos.y;
 			}
 		}
