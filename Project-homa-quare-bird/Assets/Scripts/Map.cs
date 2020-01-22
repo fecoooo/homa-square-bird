@@ -105,20 +105,10 @@ public class Map:MonoBehaviourSingleton<Map>
 
 		mapData = new BlockType[Width, Height];
 
-		Color pixelColor;
 		for (int i = 0; i < Width; ++i)
 		{
 			for (int j = 0; j < Height; ++j)
-			{
-				pixelColor = mapDataTex.GetPixel(i, j);
-
-				bool isBlackButNothingAbove = mapDataTex.GetPixel(i, j) == Color.black && mapDataTex.GetPixel(i, j + 1) == Color.white;
-				bool topBlock = j == Height - 1;
-				if (isBlackButNothingAbove && !topBlock)
-					pixelColor = Color.green;
-
-				mapData[i, j] = GetBlockTypeByColor(pixelColor);
-			}
+				mapData[i, j] = GetBlockTypeByColor(mapDataTex.GetPixel(i, j));
 		}
 	}
 
