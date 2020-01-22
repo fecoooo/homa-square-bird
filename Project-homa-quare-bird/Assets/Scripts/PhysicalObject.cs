@@ -12,6 +12,7 @@ public class PhysicalObject:MonoBehaviour
 	protected BoxCollider colldier;
 
 	protected bool frontCollision;
+	protected bool shouldUpdate;
 
 	protected Vector3 MiddleRearPoint
 	{
@@ -40,7 +41,9 @@ public class PhysicalObject:MonoBehaviour
 
 	protected virtual void OnFixedUpdate()
 	{
-		if (GameHandler.instance.CurrentState != GameState.InGame || frontCollision)
+		SetShouldUpdate();
+
+		if (!shouldUpdate)
 			return;
 
 		SetHorizontalMovement();
@@ -50,6 +53,11 @@ public class PhysicalObject:MonoBehaviour
 
 		if (frontCollision)
 			DestroyObject();
+	}
+
+	protected virtual void SetShouldUpdate()
+	{
+		shouldUpdate = GameHandler.instance.CurrentState == GameState.InGame && !frontCollision;
 	}
 
 	protected virtual void SetHorizontalMovement()
@@ -86,8 +94,9 @@ public class PhysicalObject:MonoBehaviour
 		}
 	}
 
-	protected virtual void DestroyObject()
+	public virtual void DestroyObject()
 	{
+		GetComponent<Collider>().enabled = false;
 		GetComponent<MeshRenderer>().enabled = false;
 		GetComponent<ParticleSystem>().Play();
 	}

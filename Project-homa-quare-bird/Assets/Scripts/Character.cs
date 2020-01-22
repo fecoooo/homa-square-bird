@@ -17,7 +17,7 @@ public class Character : PhysicalObject
 
 	protected Vector3 TopForwardPoint
 	{
-		get => MiddleFrontPoint + new Vector3(0, colldier.bounds.extents.y, 0);
+		get => MiddleFrontPoint + new Vector3(0, colldier.bounds.extents.y + GamePreferences.instance.gravityPerFrame, 0);
 	}
 	public bool Ready { get; private set; }
 
@@ -37,11 +37,17 @@ public class Character : PhysicalObject
 		if (GameHandler.instance.CurrentState != GameState.InGame)
 			return;
 
+
 		if (Input.GetMouseButtonDown(0))
 		{
 			eggSpawnPositionYZ = transform.position;
 			currentJumpFrame = 0;
 		}
+	}
+
+	protected override void SetShouldUpdate()
+	{
+		shouldUpdate = GameHandler.instance.CurrentState == GameState.InGame || GameHandler.instance.CurrentState == GameState.GameWon;
 	}
 
 	protected override void SetHorizontalMovement()
@@ -57,7 +63,11 @@ public class Character : PhysicalObject
 			if (frontCollision)
 			{
 				if (hitInfo.collider.name == "WinCollider")
+				{
+					foreach (GameObject egg in allEggs)
+						egg.GetComponent<PhysicalObject>().DestroyObject();
 					GameHandler.instance.TriggerGameWon();
+				}
 				else
 					GameHandler.instance.TriggerGameLost();
 			}
@@ -66,9 +76,10 @@ public class Character : PhysicalObject
 		nextMovePos.x = frontCollision ? transform.position.x : transform.position.x + GamePreferences.instance.speed;
 	}
 
-	protected override void DestroyObject()
+	public override void DestroyObject()
 	{
-		GetComponent<ParticleSystem>().Play();
+		if(GameHandler.instance.CurrentState == GameState.InGame)
+			GetComponent<ParticleSystem>().Play();
 	}
 
 	protected override void SetVerticalMovement()
