@@ -58,6 +58,8 @@ public class UIHandler:MonoBehaviour
 			case GameState.GameWon:
 				middleMsgLbl.gameObject.SetActive(true);
 				middleMsgLbl.text = "Level Complete";
+				bottomMsgLbl.gameObject.SetActive(true);
+				bottomMsgLbl.text = "Tap for next level";
 				break;
 			case GameState.GameLost:
 				middleMsgLbl.gameObject.SetActive(true);

@@ -15,9 +15,9 @@ public class Character : PhysicalObject
 
 	List<GameObject> allEggs = new List<GameObject>();
 
-	protected Vector3 ForwardTopPoint
+	protected Vector3 TopForwardPoint
 	{
-		get => BottomFrontPoint + new Vector3(0, colldier.size.y, 0);
+		get => MiddleFrontPoint + new Vector3(0, colldier.bounds.extents.y, 0);
 	}
 	public bool Ready { get; private set; }
 
@@ -44,47 +44,41 @@ public class Character : PhysicalObject
 		}
 	}
 
-	protected override void OnFixedUpdate()
+	protected override void SetHorizontalMovement()
 	{
-		if (GameHandler.instance.CurrentState != GameState.InGame)
-			return;
-
-		moveVector = Vector3.zero;
-
 		if (!frontCollision)
 		{
 			RaycastHit hitInfo;
 
-			frontCollision = Physics.Raycast(ForwardTopPoint, new Vector3(1, 0, 0), out hitInfo, GamePreferences.instance.bottomCheckDistance);
-			if(!frontCollision)
-				frontCollision = Physics.Raycast(ForwardPoint, new Vector3(1, 0, 0), out hitInfo, GamePreferences.instance.bottomCheckDistance);
+			frontCollision = Physics.Raycast(TopForwardPoint, new Vector3(1, 0, 0), out hitInfo, GamePreferences.instance.forwardCheckDistance);
+			if (!frontCollision)
+				frontCollision = Physics.Raycast(BottomForwardPoint, new Vector3(1, 0, 0), out hitInfo, GamePreferences.instance.forwardCheckDistance);
 
 			if (frontCollision)
 			{
-				if(hitInfo.collider.name == "WinCollider")
+				if (hitInfo.collider.name == "WinCollider")
 					GameHandler.instance.TriggerGameWon();
 				else
 					GameHandler.instance.TriggerGameLost();
 			}
 		}
 
-		moveVector.x = frontCollision ? 0 : GamePreferences.instance.speed;
+		nextMovePos.x = frontCollision ? transform.position.x : transform.position.x + GamePreferences.instance.speed;
+	}
 
-		grounded = Physics.Raycast(BottomFrontPoint, Vector3.down, GamePreferences.instance.bottomCheckDistance) ||
-			Physics.Raycast(BottomRearPoint, Vector3.down, GamePreferences.instance.bottomCheckDistance);
-
-		if (!grounded)
-			moveVector.y = GamePreferences.instance.gravityPerFrame;
-
+	protected override void SetVerticalMovement()
+	{
 		if (currentJumpFrame <= jumpFrames)
 		{
-			moveVector.y = jumpStep;
+			nextMovePos.y = transform.position.y + jumpStep;
 			if (currentJumpFrame == jumpFrames)
 				SpawnEgg();
 			currentJumpFrame++;
 		}
-
-		transform.position += moveVector;
+		else
+		{
+			base.SetVerticalMovement();
+		}
 	}
 
 	void ResetPosition()
@@ -118,7 +112,7 @@ public class Character : PhysicalObject
 	public void SpawnEgg()
 	{
 		GameObject egg = Instantiate(GamePreferences.instance.egg);
-		float spawnX = transform.position.x + GamePreferences.instance.speed;
+		float spawnX = transform.position.x;
 		egg.transform.position = new Vector3(spawnX, eggSpawnPositionYZ.y, eggSpawnPositionYZ.z);
 
 		allEggs.Add(egg);
@@ -134,7 +128,7 @@ public class Character : PhysicalObject
 	protected override void DebugDraw()
 	{
 		base.DebugDraw();
-		Debug.DrawLine(ForwardTopPoint, ForwardTopPoint + new Vector3(1, 0, 0), Color.magenta);
+		Debug.DrawLine(TopForwardPoint, TopForwardPoint + new Vector3(1, 0, 0), Color.magenta);
 	}
 
 
