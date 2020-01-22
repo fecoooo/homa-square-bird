@@ -91,6 +91,16 @@ public class Map:MonoBehaviourSingleton<Map>
 		allBlocks.Clear();
 	}
 
+	public void DestroyBlocks(RaycastHit[] infos)
+	{
+		foreach(RaycastHit i in infos)
+		{
+			Block block = i.collider.GetComponent<Block>();
+			if (block != null)
+				block.DestroyBlock();
+		}
+	}
+
 	/*
 	Information in mapData stored differently! Stored by columns, not rows.
 	

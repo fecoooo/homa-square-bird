@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +7,11 @@ public class Character : PhysicalObject
 {
 	public int jumpFrames;
 	public float jumpHeight = 1f;
+
+	const float ShootDistance = 4f;
+	const float ShootTime = 10f;
+	float currentShootTime = 0f;
+
 	int currentJumpFrame = int.MaxValue;
 	float jumpStep;
 	Vector3 eggSpawnPositionYZ;
@@ -15,21 +20,27 @@ public class Character : PhysicalObject
 
 	List<GameObject> allEggs = new List<GameObject>();
 
+	LineRenderer laser;
+
 	protected Vector3 TopForwardPoint
 	{
 		get => MiddleFrontPoint + new Vector3(0, collider.bounds.extents.y + GamePreferences.instance.gravityPerFrame, 0);
 	}
+
 	public bool Ready { get; private set; }
 
 	protected override void OnStart()
 	{
 		base.OnStart();
 
+		laser = GetComponent<LineRenderer>();
+
 		spawnPosition = transform.position;
 
 		jumpStep = jumpHeight / jumpFrames;
 
 		GameHandler.instance.GameStateChanged += OnGameStateChanged;
+		GameHandler.instance.ScoreChanged += OnScoreChanged;
 	}
 
 	private void Update()
@@ -43,6 +54,23 @@ public class Character : PhysicalObject
 			eggSpawnPositionYZ = transform.position;
 			currentJumpFrame = 0;
 		}
+
+		if (currentShootTime > 0)
+		{
+			laser.SetPosition(0, transform.position);
+			laser.SetPosition(1, transform.position + new Vector3(ShootDistance, 0, 0));
+			currentShootTime -= Time.deltaTime;
+			Map.instance.DestroyBlocks(Physics.RaycastAll(collider.bounds.center, new Vector3(1, 0, 0), ShootDistance));
+			Debug.DrawLine(collider.bounds.center, collider.bounds.center + new Vector3(ShootDistance, 0, 0), Color.yellow);
+		}
+		else if (laser.enabled)
+			laser.enabled = false;
+	}
+
+	void StartShooting()
+	{
+		laser.enabled = true;
+		currentShootTime = ShootTime;
 	}
 
 	protected override void SetShouldUpdate()
@@ -133,6 +161,12 @@ public class Character : PhysicalObject
 			default:
 				break;
 		}
+	}
+
+	void OnScoreChanged(int currentScore, int consecutiveScore)
+	{
+		if (consecutiveScore == 2)
+			StartShooting();
 	}
 
 	public void SpawnEgg()

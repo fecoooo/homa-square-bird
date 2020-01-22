@@ -75,16 +75,16 @@ public class UIHandler:MonoBehaviour
 		}
 	}
 
-	void OnScoreChanged(int currentScore)
+	void OnScoreChanged(int currentScore, int consecutiveScore)
 	{
 		scoreLbl.text = currentScore.ToString();
-		StartCoroutine(GratitudeOnScore());
+		StartCoroutine(GratitudeOnScore(consecutiveScore));
 	}
 
-	IEnumerator GratitudeOnScore()
+	IEnumerator GratitudeOnScore(int consecutiveScore)
 	{
 		middleMsgLbl.gameObject.SetActive(true);
-		middleMsgLbl.text = gratitudes[GameHandler.instance.ConsecutiveScore];
+		middleMsgLbl.text = gratitudes[consecutiveScore];
 
 		float timePassed = 0;
 		while (timePassed < gratitudeAnimationTime)
