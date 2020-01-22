@@ -29,7 +29,7 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 	{
 		PlayerPrefs.DeleteKey("CurrentLevel");
 
-		CurrentLevel = PlayerPrefs.GetInt("CurrentLevel", 2);
+		CurrentLevel = PlayerPrefs.GetInt("CurrentLevel", 0);
 
 		ScoreChanged += OnScoreChanged;
 
@@ -73,6 +73,7 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 			case GameState.BeforeGame:
 				scoreBlocks.Clear();
 				consecutiveScore = -1;
+				score = 0;
 				break;
 			case GameState.GameWon:
 				CurrentLevel++;
