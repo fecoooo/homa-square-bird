@@ -9,7 +9,7 @@ public class PhysicalObject:MonoBehaviour
 
 	protected Vector3 nextMovePos = new Vector3();
 
-	protected BoxCollider collider;
+	new protected BoxCollider collider;
 
 	protected bool frontCollision;
 	protected bool shouldUpdate;
