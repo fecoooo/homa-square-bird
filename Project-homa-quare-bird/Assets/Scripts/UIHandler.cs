@@ -16,6 +16,8 @@ public class UIHandler:MonoBehaviour
 	TextMeshProUGUI middleMsgLbl;
 	TextMeshProUGUI bottomMsgLbl;
 
+	const float gratitudeAnimationTime = 1f;
+	readonly string[] gratitudes = { "Superb!", "Magnific!", "Impressive!" };
 
 	void Start()
 	{
@@ -76,6 +78,22 @@ public class UIHandler:MonoBehaviour
 	void OnScoreChanged(int currentScore)
 	{
 		scoreLbl.text = currentScore.ToString();
+		StartCoroutine(GratitudeOnScore());
+	}
+
+	IEnumerator GratitudeOnScore()
+	{
+		middleMsgLbl.gameObject.SetActive(true);
+		middleMsgLbl.text = gratitudes[GameHandler.instance.ConsecutiveScore];
+
+		float timePassed = 0;
+		while (timePassed < gratitudeAnimationTime)
+		{
+			timePassed += Time.deltaTime;
+			yield return null;
+		}
+
+		middleMsgLbl.gameObject.SetActive(false);
 	}
 
 	void InitLevel()
