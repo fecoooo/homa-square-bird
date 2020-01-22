@@ -40,13 +40,16 @@ public class PhysicalObject:MonoBehaviour
 
 	protected virtual void OnFixedUpdate()
 	{
-		if (GameHandler.instance.CurrentState != GameState.InGame)
+		if (GameHandler.instance.CurrentState != GameState.InGame || frontCollision)
 			return;
 
 		SetHorizontalMovement();
 		SetVerticalMovement();
 
 		transform.position = nextMovePos;
+
+		if (frontCollision)
+			DestroyObject();
 	}
 
 	protected virtual void SetHorizontalMovement()
@@ -83,6 +86,11 @@ public class PhysicalObject:MonoBehaviour
 		}
 	}
 
+	protected virtual void DestroyObject()
+	{
+		GetComponent<MeshRenderer>().enabled = false;
+		GetComponent<ParticleSystem>().Play();
+	}
 
 	void FixedUpdate()
 	{

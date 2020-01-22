@@ -66,6 +66,11 @@ public class Character : PhysicalObject
 		nextMovePos.x = frontCollision ? transform.position.x : transform.position.x + GamePreferences.instance.speed;
 	}
 
+	protected override void DestroyObject()
+	{
+		GetComponent<ParticleSystem>().Play();
+	}
+
 	protected override void SetVerticalMovement()
 	{
 		if (currentJumpFrame <= jumpFrames)
