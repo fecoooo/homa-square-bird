@@ -65,7 +65,7 @@ public class Character : PhysicalObject
 				if (hitInfo.collider.name == "WinCollider")
 				{
 					foreach (GameObject egg in allEggs)
-						egg.GetComponent<PhysicalObject>().DestroyObject();
+						egg.GetComponent<PhysicalObject>().DestroyObject(0);
 					GameHandler.instance.TriggerGameWon();
 				}
 				else
@@ -76,7 +76,7 @@ public class Character : PhysicalObject
 		nextMovePos.x = frontCollision ? transform.position.x : transform.position.x + GamePreferences.instance.speed;
 	}
 
-	public override void DestroyObject()
+	public override void DestroyObject(int framesToWait = 2)
 	{
 		if(GameHandler.instance.CurrentState == GameState.InGame)
 			GetComponent<ParticleSystem>().Play();

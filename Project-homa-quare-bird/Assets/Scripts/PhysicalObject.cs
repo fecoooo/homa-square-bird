@@ -94,11 +94,19 @@ public class PhysicalObject:MonoBehaviour
 		}
 	}
 
-	public virtual void DestroyObject()
+	public virtual void DestroyObject(int framesToWait = 2)
 	{
-		GetComponent<Collider>().enabled = false;
 		GetComponent<MeshRenderer>().enabled = false;
 		GetComponent<ParticleSystem>().Play();
+		StartCoroutine(DestroyObjectDelayedPart(framesToWait));
+	}
+
+	IEnumerator DestroyObjectDelayedPart(int framesToWait)
+	{
+		for (int i = 0; i < framesToWait; ++i)
+			yield return new WaitForFixedUpdate();
+
+		GetComponent<Collider>().enabled = false;
 	}
 
 	void FixedUpdate()
