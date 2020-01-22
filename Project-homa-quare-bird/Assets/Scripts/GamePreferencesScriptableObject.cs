@@ -6,9 +6,12 @@ public class GamePreferencesScriptableObject: ScriptableObject
 	public GameObject egg;
 	public GameObject DirtBlock;
 	public GameObject GrassyDirtBlock;
+	public GameObject GrassyDirtBlockWithScore;
 	public float gravityPerFrame = -0.1f;
 
 	public float speed = .1f;
 	public float bottomCheckDistance = .15f;
 	public float forwardCheckDistance = .15f;
+
+	public int scoreStep = 5;
 }

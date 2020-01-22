@@ -68,30 +68,33 @@ public class PhysicalObject:MonoBehaviour
 		nextMovePos.x = frontCollision ? transform.position.x : transform.position.x + GamePreferences.instance.speed;
 	}
 
-	protected virtual void SetVerticalMovement()
+	protected virtual Tuple<RaycastHit, RaycastHit> SetVerticalMovement()
 	{
-		RaycastHit hitInfo;
+		RaycastHit hitInfo1;
+		RaycastHit hitInfo2;
 		nextMovePos.y = transform.position.y + GamePreferences.instance.gravityPerFrame;
 
 		//BottomFrontPoint
-		if (Physics.Raycast(MiddleFrontPoint, Vector3.down, out hitInfo, .5f))
+		if (Physics.Raycast(MiddleFrontPoint, Vector3.down, out hitInfo1, .5f))
 		{
-			if (hitInfo.collider.bounds.Intersects(colldier.bounds))
+			if (hitInfo1.collider.bounds.Intersects(colldier.bounds))
 			{
-				float possibleNewY = hitInfo.collider.bounds.max.y + colldier.bounds.extents.y;
+				float possibleNewY = hitInfo1.collider.bounds.max.y + colldier.bounds.extents.y;
 				nextMovePos.y = possibleNewY > nextMovePos.y ? possibleNewY : nextMovePos.y;
 			}
 		}
 
 		//BottomRearPoint
-		if (Physics.Raycast(MiddleRearPoint, Vector3.down, out hitInfo, .5f))
+		if (Physics.Raycast(MiddleRearPoint, Vector3.down, out hitInfo2, .5f))
 		{
-			if (hitInfo.collider.bounds.Intersects(colldier.bounds))
+			if (hitInfo2.collider.bounds.Intersects(colldier.bounds))
 			{
-				float possibleNewY = hitInfo.collider.bounds.max.y + colldier.bounds.extents.y;
+				float possibleNewY = hitInfo2.collider.bounds.max.y + colldier.bounds.extents.y;
 				nextMovePos.y = possibleNewY > nextMovePos.y ? possibleNewY : nextMovePos.y;
 			}
 		}
+
+		return new Tuple<RaycastHit, RaycastHit>(hitInfo1, hitInfo2);
 	}
 
 	public virtual void DestroyObject(int framesToWait = 2)

@@ -82,7 +82,7 @@ public class Character : PhysicalObject
 			GetComponent<ParticleSystem>().Play();
 	}
 
-	protected override void SetVerticalMovement()
+	protected override Tuple<RaycastHit, RaycastHit> SetVerticalMovement()
 	{
 		if (currentJumpFrame <= jumpFrames)
 		{
@@ -90,10 +90,20 @@ public class Character : PhysicalObject
 			if (currentJumpFrame == jumpFrames)
 				SpawnEgg();
 			currentJumpFrame++;
+
+			return new Tuple<RaycastHit, RaycastHit>(new RaycastHit(), new RaycastHit());
 		}
 		else
 		{
-			base.SetVerticalMovement();
+			Tuple <RaycastHit, RaycastHit> hitInfos = base.SetVerticalMovement();
+
+			if (hitInfos.Item1.collider != null && hitInfos.Item1.collider.gameObject.tag == "Score")
+				GameHandler.instance.AddWithScore(hitInfos.Item1.collider.gameObject);
+
+			if (hitInfos.Item2.collider != null && hitInfos.Item2.collider.gameObject.tag == "Score")
+				GameHandler.instance.AddWithScore(hitInfos.Item2.collider.gameObject);
+
+			return hitInfos;
 		}
 	}
 

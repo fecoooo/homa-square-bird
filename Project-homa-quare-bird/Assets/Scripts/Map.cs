@@ -70,6 +70,9 @@ public class Map:MonoBehaviourSingleton<Map>
 			case BlockType.GrassyDirt:
 				block = Instantiate(GamePreferences.instance.GrassyDirtBlock);
 				break;
+			case BlockType.GrassyDirtWithScore:
+				block = Instantiate(GamePreferences.instance.GrassyDirtBlockWithScore);
+				break;
 			case BlockType.TopDirt:
 				throw new NotImplementedException();
 			default:
@@ -120,6 +123,8 @@ public class Map:MonoBehaviourSingleton<Map>
 			return BlockType.GrassyDirt;
 		else if (color == Color.white)
 			return BlockType.None;
+		else if (color == Color.red)
+			return BlockType.GrassyDirtWithScore;
 		else
 			throw new Exception("There's no blockytype associated for this color.");
 	}
@@ -129,6 +134,7 @@ public class Map:MonoBehaviourSingleton<Map>
 		None,
 		Dirt,
 		GrassyDirt,
+		GrassyDirtWithScore,
 		TopDirt
 	}
 }

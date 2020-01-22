@@ -8,7 +8,13 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 	public delegate void GameStateChangeHandler(GameState state);
 	public event GameStateChangeHandler GameStateChanged;
 
+	public delegate void ScoreChangeHandler(int currentScore);
+	public event ScoreChangeHandler ScoreChanged;
+
 	public GameState CurrentState { get; private set; }
+
+	int score = 0;
+	List<GameObject> scoreBlocks = new List<GameObject>();
 
 	public float Progress
 	{
@@ -22,6 +28,8 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 		PlayerPrefs.DeleteKey("CurrentLevel");
 
 		CurrentLevel = PlayerPrefs.GetInt("CurrentLevel", 0);
+
+		ScoreChanged += OnScoreChanged;
 
 		GameStateChanged += OnGameStateChanged;
 		GameStateChanged(GameState.BeforeGame);
@@ -40,6 +48,9 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 	{
 		switch (CurrentState)
 		{
+			case GameState.BeforeGame:
+				scoreBlocks.Clear();
+				break;
 			case GameState.WaitingForInput:
 				GameStateChanged(GameState.InGame);
 				break;
@@ -64,6 +75,11 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 		CurrentState = state;
 	}
 
+	void OnScoreChanged(int currentScore)
+	{
+		//dummy
+	}
+
 	public void TriggerGameLost()
 	{
 		GameStateChanged(GameState.GameLost);
@@ -74,6 +90,15 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 		GameStateChanged(GameState.GameWon);
 	}
 
+	internal void AddWithScore(GameObject scoreBlock)
+	{
+		if (!scoreBlocks.Contains(scoreBlock))
+		{
+			scoreBlocks.Add(scoreBlock);
+			score += GamePreferences.instance.scoreStep;
+			ScoreChanged(score);
+		}
+	}
 }
 public enum GameState
 {

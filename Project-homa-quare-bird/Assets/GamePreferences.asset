@@ -17,6 +17,8 @@ MonoBehaviour:
     type: 3}
   GrassyDirtBlock: {fileID: 2784877999618138689, guid: 32b4b751350105c40a4edd0369d6dd31,
     type: 3}
+  GrassyDirtBlockWithScore: {fileID: 2784877999618138689, guid: 507593def0c019444b898bd60f2282a4,
+    type: 3}
   gravityPerFrame: -0.1
   speed: 0.1
   bottomCheckDistance: 0.15

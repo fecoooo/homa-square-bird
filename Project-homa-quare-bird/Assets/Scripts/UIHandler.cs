@@ -31,6 +31,7 @@ public class UIHandler:MonoBehaviour
 		bottomMsgLbl = transform.Find("BottomMsgLbl").GetComponent<TextMeshProUGUI>();
 
 		GameHandler.instance.GameStateChanged += OnGameStateChanged;
+		GameHandler.instance.ScoreChanged += OnScoreChanged;
 	}
 
 	void Update()
@@ -70,6 +71,11 @@ public class UIHandler:MonoBehaviour
 			default:
 				break;
 		}
+	}
+
+	void OnScoreChanged(int currentScore)
+	{
+		scoreLbl.text = currentScore.ToString();
 	}
 
 	void InitLevel()
