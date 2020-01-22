@@ -14,6 +14,8 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 	public GameState CurrentState { get; private set; }
 
 	int score = 0;
+	public int ConsecutiveScore { get; private set; } = -1;
+
 	List<GameObject> scoreBlocks = new List<GameObject>();
 
 	public float Progress
@@ -48,18 +50,10 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 	{
 		switch (CurrentState)
 		{
-			case GameState.BeforeGame:
-				scoreBlocks.Clear();
-				break;
 			case GameState.WaitingForInput:
 				GameStateChanged(GameState.InGame);
 				break;
-			case GameState.InGame:
-				break;
 			case GameState.GameWon:
-				CurrentLevel++;
-				PlayerPrefs.SetInt("CurrentLevel", CurrentLevel);
-				PlayerPrefs.Save();
 				GameStateChanged(GameState.BeforeGame);
 				break;
 			case GameState.GameLost:
@@ -73,6 +67,21 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 	private void OnGameStateChanged(GameState state)
 	{
 		CurrentState = state;
+
+		switch (CurrentState)
+		{
+			case GameState.BeforeGame:
+				scoreBlocks.Clear();
+				ConsecutiveScore = -1;
+				break;
+			case GameState.GameWon:
+				CurrentLevel++;
+				PlayerPrefs.SetInt("CurrentLevel", CurrentLevel);
+				PlayerPrefs.Save();
+				break;
+			default:
+				break;
+		}
 	}
 
 	void OnScoreChanged(int currentScore)
@@ -96,6 +105,7 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 		{
 			scoreBlocks.Add(scoreBlock);
 			score += GamePreferences.instance.scoreStep;
+			ConsecutiveScore = (ConsecutiveScore + 1) % 3;
 			ScoreChanged(score);
 		}
 	}
