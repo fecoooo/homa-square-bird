@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -148,6 +148,7 @@ public class Character : PhysicalObject
 				ClearEggs();
 				ResetPosition();
 				ResetProperies();
+				currentJumpFrame = int.MaxValue;
 				Ready = true;
 				break;
 			case GameState.InGame:
