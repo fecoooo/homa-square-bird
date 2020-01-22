@@ -49,7 +49,7 @@ public class Character : PhysicalObject
 			return;
 
 
-		if (Input.GetMouseButtonDown(0))
+		if (Input.GetMouseButtonDown(0) && CanJump())
 		{
 			eggSpawnPositionYZ = transform.position;
 			currentJumpFrame = 0;
@@ -65,6 +65,11 @@ public class Character : PhysicalObject
 		}
 		else if (laser.enabled)
 			laser.enabled = false;
+	}
+
+	private bool CanJump()
+	{
+		return !Physics.Raycast(transform.position, Vector3.up, 1f);
 	}
 
 	void StartShooting()
