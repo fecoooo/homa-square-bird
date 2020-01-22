@@ -154,6 +154,8 @@ public class Character : PhysicalObject
 				ResetPosition();
 				ResetProperies();
 				currentJumpFrame = int.MaxValue;
+				currentShootTime = 0;
+				laser.enabled = false;
 				Ready = true;
 				break;
 			case GameState.InGame:
