@@ -101,6 +101,11 @@ public class Character : PhysicalObject
 						egg.GetComponent<PhysicalObject>().DestroyObject(0);
 					GameHandler.instance.TriggerGameWon();
 				}
+				else if (hitInfo.collider.name == "TopCollider")
+				{
+					Debug.Log("Do nothing");
+					//Do nothing
+				}
 				else
 					GameHandler.instance.TriggerGameLost();
 			}

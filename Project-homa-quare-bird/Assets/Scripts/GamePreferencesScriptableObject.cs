@@ -5,6 +5,7 @@ public class GamePreferencesScriptableObject: ScriptableObject
 {
 	public GameObject egg;
 	public GameObject DirtBlock;
+	public GameObject TopDirtBlock;
 	public GameObject GrassyDirtBlock;
 	public GameObject GrassyDirtBlockWithScore;
 	public float gravityPerFrame = -0.1f;
