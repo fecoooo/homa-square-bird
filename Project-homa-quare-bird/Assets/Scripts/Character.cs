@@ -103,8 +103,7 @@ public class Character : PhysicalObject
 				}
 				else if (hitInfo.collider.name == "TopCollider")
 				{
-					Debug.Log("Do nothing");
-					//Do nothing
+					//Do nothings
 				}
 				else
 					GameHandler.instance.TriggerGameLost();
