@@ -1,2 +1,3 @@
 delta time alapjan movement
 ne lehessen a max magassagnal tobb tojast lebaszni
+death animation
