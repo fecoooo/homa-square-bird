@@ -15,6 +15,8 @@ MonoBehaviour:
   egg: {fileID: 1217298017384481990, guid: 9e53c99a698948644bc5317a5d57f59f, type: 3}
   DirtBlock: {fileID: 8285843699734163249, guid: 25caa5e684dcb0a42bac3e643c169164,
     type: 3}
+  TopDirtBlock: {fileID: 8285843699734163249, guid: 3c7528cead2fcf546861227901120091,
+    type: 3}
   GrassyDirtBlock: {fileID: 2784877999618138689, guid: 32b4b751350105c40a4edd0369d6dd31,
     type: 3}
   GrassyDirtBlockWithScore: {fileID: 2784877999618138689, guid: 507593def0c019444b898bd60f2282a4,
