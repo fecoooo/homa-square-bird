@@ -14,6 +14,6 @@ public class GammaChanger : MonoBehaviour
 
 	public void OnGammaChange()
 	{
-		RenderSettings.ambientLight = new Color(slider.value, slider.value, slider.value, 1.0f);
+		RenderSettings.ambientLight = new Color(slider.value * 2, slider.value * 2, slider.value * 2, 1.0f);
 	}
 }
