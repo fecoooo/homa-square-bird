@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -108,7 +108,8 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 		{
 			scoreBlocks.Add(scoreBlock);
 			score += GamePreferences.instance.scoreStep;
-			consecutiveScore = (consecutiveScore + 1) % 3;
+			if(!Character.instance.IsShooting)
+				consecutiveScore = (consecutiveScore + 1) % 3;
 			ScoreChanged(score, consecutiveScore);
 		}
 	}

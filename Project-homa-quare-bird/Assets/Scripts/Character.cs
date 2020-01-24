@@ -9,7 +9,7 @@ public class Character : PhysicalObject
 	public float jumpHeight = 1f;
 
 	const float ShootDistance = 4f;
-	const float ShootTime = 10f;
+	const float ShootTime = 5f;
 	float currentShootTime = 0f;
 
 	int currentJumpFrame = int.MaxValue;
@@ -26,6 +26,8 @@ public class Character : PhysicalObject
 	{
 		get => MiddleFrontPoint + new Vector3(0, collider.bounds.extents.y + GamePreferences.instance.gravityPerFrame, 0);
 	}
+
+	public bool IsShooting { get => laser.enabled; }
 
 	public bool Ready { get; private set; }
 
@@ -165,6 +167,7 @@ public class Character : PhysicalObject
 			case GameState.InGame:
 				break;
 			case GameState.GameWon:
+				laser.enabled = false;
 				Ready = false;
 				break;
 			case GameState.GameLost:

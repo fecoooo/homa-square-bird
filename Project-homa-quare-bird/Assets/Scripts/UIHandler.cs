@@ -16,6 +16,8 @@ public class UIHandler:MonoBehaviour
 	TextMeshProUGUI middleMsgLbl;
 	TextMeshProUGUI bottomMsgLbl;
 
+	IEnumerator gratitudeRoutine;
+
 	const float gratitudeAnimationTime = 1f;
 	readonly string[] gratitudes = { "Superb!", "Magnific!", "Impressive!" };
 
@@ -78,7 +80,12 @@ public class UIHandler:MonoBehaviour
 	void OnScoreChanged(int currentScore, int consecutiveScore)
 	{
 		scoreLbl.text = currentScore.ToString();
-		StartCoroutine(GratitudeOnScore(consecutiveScore));
+
+		if (gratitudeRoutine != null)
+			StopCoroutine(gratitudeRoutine);
+
+		gratitudeRoutine = GratitudeOnScore(consecutiveScore);
+		StartCoroutine(gratitudeRoutine);
 	}
 
 	IEnumerator GratitudeOnScore(int consecutiveScore)

@@ -1,3 +1,14 @@
+USE HIGH QUALITY WHEN YOU SEND IT TO JUWON
+
+UI: don't gratitude when shoot (but gratitude when jsut started shooting) --> bug
+
+stone cannot be destroyed
+
+shoot time indicator
+speed up on  succesful shit
+indicate birds progress (3 birds till shoot)
+coins
+
 hatter 
 death anim
 10 level
