@@ -1,5 +1,8 @@
-hatter
+hatter 
 death anim
 10 level
+
+proper particles
+proper laser
 
 delta time alapjan movement
