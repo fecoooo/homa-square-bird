@@ -22,7 +22,7 @@ MonoBehaviour:
   GrassyDirtBlockWithScore: {fileID: 2784877999618138689, guid: 507593def0c019444b898bd60f2282a4,
     type: 3}
   StoneBlock: {fileID: 1185819803495236, guid: d3de567ff6760134d96b267ca68d3019, type: 3}
-  StoneBlockWithScore: {fileID: 1185819803495236, guid: fe59c4c3329d153409451e902aed74bb,
+  GrassyStoneBlockWithScore: {fileID: 1282160558003376, guid: 0d36587d4ff1b9447bebff2d6b5d3173,
     type: 3}
   gravityPerFrame: -0.2
   speed: 0.1

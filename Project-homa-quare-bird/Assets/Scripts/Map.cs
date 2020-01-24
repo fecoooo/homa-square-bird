@@ -6,7 +6,6 @@ using UnityEngine;
 public class Map:MonoBehaviourSingleton<Map>
 {
 	readonly Color Gray = new Color(0.5019608f, 0.5019608f, 0.5019608f);
-	readonly Color Claret = new Color(0.6117647f, 0f, 0.1019608f);
 	const string MapDataPath = "Levels/level_";
 
 	List<GameObject> allBlocks = new List<GameObject>();
@@ -81,8 +80,8 @@ public class Map:MonoBehaviourSingleton<Map>
 			case BlockType.Stone:
 				block = Instantiate(GamePreferences.instance.StoneBlock);
 				break;
-			case BlockType.StoneWithScore:
-				block = Instantiate(GamePreferences.instance.StoneBlockWithScore);
+			case BlockType.GrassyStoneWithScore:
+				block = Instantiate(GamePreferences.instance.GrassyStoneBlockWithScore);
 				break;
 			default:
 				throw new Exception("No such blocktype defined");
@@ -150,16 +149,10 @@ public class Map:MonoBehaviourSingleton<Map>
 			return BlockType.GrassyDirtWithScore;
 		else if (color == Gray)
 			return BlockType.Stone;
-		else if (color == Claret)
-			return BlockType.StoneWithScore;
+		else if (color == Color.magenta)
+			return BlockType.GrassyStoneWithScore;
 		else
-		{
-			if (color == Gray)
-			{
-
-			}
 			throw new Exception("There's no blockytype associated for this color: " + color);
-		}
 	}
 
 	public enum BlockType
@@ -170,6 +163,6 @@ public class Map:MonoBehaviourSingleton<Map>
 		GrassyDirt,
 		GrassyDirtWithScore,
 		Stone,
-		StoneWithScore
+		GrassyStoneWithScore
 	}
 }
