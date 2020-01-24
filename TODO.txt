@@ -1,5 +1,4 @@
 hatter
-fonts
 death anim
 10 level
 
