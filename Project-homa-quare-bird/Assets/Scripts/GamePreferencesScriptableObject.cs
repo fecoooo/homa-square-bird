@@ -8,6 +8,8 @@ public class GamePreferencesScriptableObject: ScriptableObject
 	public GameObject TopDirtBlock;
 	public GameObject GrassyDirtBlock;
 	public GameObject GrassyDirtBlockWithScore;
+	public GameObject StoneBlock;
+	public GameObject StoneBlockWithScore;
 	public float gravityPerFrame = -0.1f;
 
 	public float speed = .1f;
