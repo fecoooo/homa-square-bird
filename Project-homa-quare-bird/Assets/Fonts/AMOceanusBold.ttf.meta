@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: ed5d3a6c588443447b51df5397bf281f
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: AMOceanus
+  fontNames:
+  - AMOceanus
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: e78900578da059c4cb8f2a2da7ee25ae, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
