@@ -1,3 +1,6 @@
+hatter
+fonts
+death anim
+10 level
+
 delta time alapjan movement
-ne lehessen a max magassagnal tobb tojast lebaszni
-death animation
