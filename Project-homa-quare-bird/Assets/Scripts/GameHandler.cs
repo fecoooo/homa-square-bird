@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -77,6 +77,8 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 				break;
 			case GameState.GameWon:
 				CurrentLevel++;
+				if (CurrentLevel > 9)
+					CurrentLevel = 0;
 				PlayerPrefs.SetInt("CurrentLevel", CurrentLevel);
 				PlayerPrefs.Save();
 				break;
