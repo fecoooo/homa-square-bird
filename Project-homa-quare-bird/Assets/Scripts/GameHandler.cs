@@ -125,6 +125,11 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 			ScoreChanged(score);
 		}
 	}
+
+	public void Vibrate()
+	{
+		Vibration.Vibrate();
+	}
 }
 public enum GameState
 {
