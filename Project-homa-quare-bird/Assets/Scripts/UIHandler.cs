@@ -19,7 +19,11 @@ public class UIHandler:MonoBehaviour
 	IEnumerator gratitudeRoutine;
 
 	const float gratitudeAnimationTime = 1f;
+	const float scaleUpAnimModifier = 4f;
+
 	readonly string[] gratitudes = { "Superb!", "Magnific!", "Impressive!" };
+
+	readonly Color[] gratitudeColors = { Color.yellow, new Color(1f, 0.4f, 0), Color.red };
 
 	void Start()
 	{
@@ -63,12 +67,14 @@ public class UIHandler:MonoBehaviour
 				middleMsgLbl.gameObject.SetActive(false);
 				break;
 			case GameState.GameWon:
+				middleMsgLbl.color = Color.white;
 				middleMsgLbl.gameObject.SetActive(true);
 				middleMsgLbl.text = "Level Complete";
 				bottomMsgLbl.gameObject.SetActive(true);
 				bottomMsgLbl.text = "Tap for next level";
 				break;
 			case GameState.GameLost:
+				middleMsgLbl.color = Color.white;
 				middleMsgLbl.gameObject.SetActive(true);
 				middleMsgLbl.text = "Game Over";
 				bottomMsgLbl.gameObject.SetActive(true);
@@ -97,10 +103,15 @@ public class UIHandler:MonoBehaviour
 	{
 		middleMsgLbl.gameObject.SetActive(true);
 		middleMsgLbl.text = gratitudes[consecutiveScore];
+		middleMsgLbl.color = gratitudeColors[consecutiveScore];
+		middleMsgLbl.transform.localScale = Vector3.zero;
 
 		float timePassed = 0;
 		while (timePassed < gratitudeAnimationTime)
 		{
+			float t = Mathf.Clamp01((timePassed / gratitudeAnimationTime) * scaleUpAnimModifier);
+			middleMsgLbl.transform.localScale = new Vector3(t, t, t);
+
 			timePassed += Time.deltaTime;
 			yield return null;
 		}
@@ -118,6 +129,7 @@ public class UIHandler:MonoBehaviour
 		currentStageLbl.text = (GameHandler.instance.CurrentLevel + 1).ToString();
 		nextStageLbl.text = (GameHandler.instance.CurrentLevel + 2).ToString();
 
+		middleMsgLbl.color = Color.white;
 		middleMsgLbl.gameObject.SetActive(true);
 		middleMsgLbl.text = "Tap to start";
 
