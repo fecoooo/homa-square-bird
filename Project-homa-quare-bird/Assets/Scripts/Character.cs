@@ -42,7 +42,7 @@ public class Character : PhysicalObject
 		jumpStep = jumpHeight / jumpFrames;
 
 		GameHandler.instance.GameStateChanged += OnGameStateChanged;
-		GameHandler.instance.ScoreChanged += OnScoreChanged;
+		GameHandler.instance.ConsecutiveScoreChanged += OnConsecutiveScoreChanged;
 	}
 
 	private void Update()
@@ -178,11 +178,12 @@ public class Character : PhysicalObject
 		}
 	}
 
-	void OnScoreChanged(int currentScore, int consecutiveScore)
+	void OnConsecutiveScoreChanged(int consecutiveScore)
 	{
 		if (consecutiveScore == 2)
 			StartShooting();
 	}
+
 
 	public void SpawnEgg()
 	{

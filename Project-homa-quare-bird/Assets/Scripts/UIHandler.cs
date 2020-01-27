@@ -36,6 +36,8 @@ public class UIHandler:MonoBehaviour
 
 		GameHandler.instance.GameStateChanged += OnGameStateChanged;
 		GameHandler.instance.ScoreChanged += OnScoreChanged;
+		GameHandler.instance.ConsecutiveScoreChanged += OnConsecutiveScoreChanged;
+
 	}
 
 	void Update()
@@ -77,10 +79,13 @@ public class UIHandler:MonoBehaviour
 		}
 	}
 
-	void OnScoreChanged(int currentScore, int consecutiveScore)
+	void OnScoreChanged(int currentScore)
 	{
 		scoreLbl.text = currentScore.ToString();
+	}
 
+	void OnConsecutiveScoreChanged(int consecutiveScore)
+	{
 		if (gratitudeRoutine != null)
 			StopCoroutine(gratitudeRoutine);
 

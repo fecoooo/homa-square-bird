@@ -7,6 +7,7 @@ public class Map:MonoBehaviourSingleton<Map>
 {
 	readonly Color Gray = new Color(0.5019608f, 0.5019608f, 0.5019608f);
 	const string MapDataPath = "Levels/level_";
+	const float timeBetweenCannonShots = .3f;
 
 	List<GameObject> allBlocks = new List<GameObject>();
 
@@ -18,10 +19,18 @@ public class Map:MonoBehaviourSingleton<Map>
 
 	BlockType[,] mapData;
 
+	List<GameObject> cannons = new List<GameObject>();
+
 	void Start()
 	{
 		endPlatform = transform.Find("EndPlatform");
 		GameHandler.instance.GameStateChanged += OnGameStateChanged;
+
+		foreach(Transform child in transform.Find("EndPlatform/Props"))
+		{
+			if(child.name.Contains("Cannon"))
+				cannons.Add(child.gameObject);
+		}
 	}
 
 	void OnGameStateChanged(GameState state)
@@ -37,12 +46,23 @@ public class Map:MonoBehaviourSingleton<Map>
 				break;
 			case GameState.GameWon:
 				Ready = false;
+				StartCoroutine(ShootCannons());
 				break;
 			case GameState.GameLost:
 				Ready = false;
 				break;
 			default:
 				break;
+		}
+	}
+
+	IEnumerator ShootCannons()
+	{
+		foreach(GameObject c in cannons)
+		{
+			c.gameObject.SetActive(true);
+			yield return new WaitForSeconds(timeBetweenCannonShots);
+			c.GetComponent<ParticleSystem>().Play();
 		}
 	}
 

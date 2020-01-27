@@ -8,8 +8,11 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 	public delegate void GameStateChangeHandler(GameState state);
 	public event GameStateChangeHandler GameStateChanged;
 
-	public delegate void ScoreChangeHandler(int currentScore, int consecutiveScores);
+	public delegate void ScoreChangeHandler(int currentScore);
 	public event ScoreChangeHandler ScoreChanged;
+
+	public delegate void ConsecutiveScoreChangeHandler(int consecutiveScores);
+	public event ConsecutiveScoreChangeHandler ConsecutiveScoreChanged;
 
 	public GameState CurrentState { get; private set; }
 
@@ -32,6 +35,7 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 		CurrentLevel = PlayerPrefs.GetInt("CurrentLevel", 0);
 
 		ScoreChanged += OnScoreChanged;
+		ConsecutiveScoreChanged += OnConsecutiveScoreChanged;
 
 		GameStateChanged += OnGameStateChanged;
 		GameStateChanged(GameState.BeforeGame);
@@ -87,7 +91,12 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 		}
 	}
 
-	void OnScoreChanged(int currentScore, int consecutiveScores)
+	void OnScoreChanged(int currentScore)
+	{
+		//dummy
+	}
+
+	void OnConsecutiveScoreChanged(int consecutiveScore)
 	{
 		//dummy
 	}
@@ -108,9 +117,12 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 		{
 			scoreBlocks.Add(scoreBlock);
 			score += GamePreferences.instance.scoreStep;
-			if(!Character.instance.IsShooting)
+			if (!Character.instance.IsShooting)
+			{
 				consecutiveScore = (consecutiveScore + 1) % 3;
-			ScoreChanged(score, consecutiveScore);
+				ConsecutiveScoreChanged(consecutiveScore);
+			}
+			ScoreChanged(score);
 		}
 	}
 }
