@@ -26,7 +26,7 @@ public class PhysicalObject:MonoBehaviour
 
 	protected Vector3 BottomForwardPoint
 	{
-		get => collider.bounds.center + new Vector3(collider.bounds.extents.x, -collider.bounds.extents.y - GamePreferences.instance.gravityPerFrame, 0);
+		get => collider.bounds.center + new Vector3(collider.bounds.extents.x, -collider.bounds.extents.y - GamePreferences.instance.gravityPerFrame * 2, 0);
 	}
 
 	protected virtual void OnStart()
