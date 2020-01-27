@@ -21,6 +21,7 @@ public class Character : PhysicalObject
 	List<GameObject> allEggs = new List<GameObject>();
 
 	LineRenderer laser;
+	Animator animator;
 
 	protected Vector3 TopForwardPoint
 	{
@@ -34,6 +35,8 @@ public class Character : PhysicalObject
 	protected override void OnStart()
 	{
 		base.OnStart();
+
+		animator = transform.GetComponentInChildren<Animator>();
 
 		laser = GetComponent<LineRenderer>();
 
@@ -156,6 +159,8 @@ public class Character : PhysicalObject
 		switch (state)
 		{
 			case GameState.BeforeGame:
+				animator.SetBool("Run", false);
+				animator.SetBool("Idle", true);
 				ClearEggs();
 				ResetPosition();
 				ResetProperies();
@@ -165,6 +170,8 @@ public class Character : PhysicalObject
 				Ready = true;
 				break;
 			case GameState.InGame:
+				animator.SetBool("Idle", false);
+				animator.SetBool("Run", true);
 				break;
 			case GameState.GameWon:
 				laser.enabled = false;
@@ -187,6 +194,8 @@ public class Character : PhysicalObject
 
 	public void SpawnEgg()
 	{
+		animator.SetBool("Jump Inplace", true);
+
 		GameObject egg = Instantiate(GamePreferences.instance.egg);
 		float spawnX = transform.position.x;
 		egg.transform.position = new Vector3(spawnX, eggSpawnPositionYZ.y, eggSpawnPositionYZ.z);
