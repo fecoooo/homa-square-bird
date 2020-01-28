@@ -59,11 +59,9 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 				break;
 			case GameState.GameWon:
 				GameStateChanged(GameState.FadeOut);
-				//GameStateChanged(GameState.BeforeGame);
 				break;
 			case GameState.GameLost:
 				GameStateChanged(GameState.FadeOut);
-				//GameStateChanged(GameState.BeforeGame);
 				break;
 
 			default:

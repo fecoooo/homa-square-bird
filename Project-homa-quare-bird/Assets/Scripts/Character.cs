@@ -26,6 +26,7 @@ public class Character : PhysicalObject
 	Animator animator;
 
 	Transform cat;
+	IEnumerator WaitFallThanRotateTowardsCamera_IEnum;
 
 	protected bool Grounded
 	{
@@ -51,8 +52,8 @@ public class Character : PhysicalObject
 
 	public bool Ready { get; private set; }
 
-	const float TimeInAirThreshold = .25f;
-	float timeInAir;
+	const float TimeInAnimStateThreshold = .15f;
+	float timeinThisAnimState;
 
 	protected override void OnStart()
 	{
@@ -93,12 +94,21 @@ public class Character : PhysicalObject
 		else if (laser.enabled)
 			laser.enabled = false;
 
-		timeInAir = Falling ? timeInAir + Time.deltaTime : 0;
+		timeinThisAnimState += Time.deltaTime;
 
-		if (Grounded || (Falling && timeInAir > TimeInAirThreshold))
-			animator.SetInteger("State", (int)AnimStates.Run);
-		else
-			animator.SetInteger("State", (int)AnimStates.Idle);
+		if(timeinThisAnimState > TimeInAnimStateThreshold)
+		{
+			if (Grounded || Falling)
+			{
+				timeinThisAnimState = 0;
+				animator.SetInteger("State", (int)AnimStates.Run);
+			}
+			else
+			{
+				timeinThisAnimState = 0;
+				animator.SetInteger("State", (int)AnimStates.Idle);
+			}
+		}
 	}
 
 	private bool CanJump()
@@ -188,6 +198,9 @@ public class Character : PhysicalObject
 		switch (state)
 		{
 			case GameState.BeforeGame:
+				if (WaitFallThanRotateTowardsCamera_IEnum != null)
+					StopCoroutine(WaitFallThanRotateTowardsCamera_IEnum);
+
 				animator.SetInteger("State", (int)AnimStates.Idle);
 				cat.rotation = Quaternion.Euler(0, 100, 0);
 
@@ -204,7 +217,10 @@ public class Character : PhysicalObject
 			case GameState.GameWon:
 				animator.SetInteger("State", (int)AnimStates.Idle);
 
-				StartCoroutine(RotateTowardsCamera());
+				WaitFallThanRotateTowardsCamera_IEnum = WaitFallThanRotateTowardsCamera();
+				StartCoroutine(WaitFallThanRotateTowardsCamera_IEnum);
+
+				currentJumpFrame = int.MaxValue;
 
 				laser.enabled = false;
 				Ready = false;
@@ -224,7 +240,7 @@ public class Character : PhysicalObject
 	}
 
 
-	IEnumerator RotateTowardsCamera()
+	IEnumerator WaitFallThanRotateTowardsCamera()
 	{
 		while (!Grounded)
 			yield return null;
