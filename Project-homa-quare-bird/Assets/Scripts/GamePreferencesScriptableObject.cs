@@ -3,7 +3,8 @@
 [CreateAssetMenu(fileName = "GamePreferences", menuName = "ScriptableObjects/GamePreferences", order = 1)]
 public class GamePreferencesScriptableObject: ScriptableObject
 {
-	public GameObject egg;
+	public GameObject Egg;
+	public Material[] EggMaterials;
 	public GameObject DirtBlock;
 	public GameObject TopDirtBlock;
 	public GameObject GrassyDirtBlock;

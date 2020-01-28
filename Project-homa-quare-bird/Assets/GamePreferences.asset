@@ -12,7 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee7bb0e796fba2a4aa106994980caa16, type: 3}
   m_Name: GamePreferences
   m_EditorClassIdentifier: 
-  egg: {fileID: 8005354171081558425, guid: 84b01e56c8835464e9507f2bcfd0d1fd, type: 3}
+  Egg: {fileID: 8005354171081558425, guid: 84b01e56c8835464e9507f2bcfd0d1fd, type: 3}
+  EggMaterials:
+  - {fileID: 2100000, guid: f817a59d56114484aa3ca27c484a677e, type: 2}
+  - {fileID: 2100000, guid: 174ecd3f1702b854c8049740a0996fae, type: 2}
+  - {fileID: 2100000, guid: 9286c9fa04a24f44da6c9a0ea3f2fefd, type: 2}
+  - {fileID: 2100000, guid: 64a5f7f1a6c2ed446b6606c3ebf85e46, type: 2}
+  - {fileID: 2100000, guid: 8a31cad80755da841a30b9193adf12ee, type: 2}
+  - {fileID: 2100000, guid: 5ed0fe39930bebc408bd0570cd942b24, type: 2}
+  - {fileID: 2100000, guid: 7e7154763c5c93b4198b0b5ec26453c6, type: 2}
   DirtBlock: {fileID: 8285843699734163249, guid: 25caa5e684dcb0a42bac3e643c169164,
     type: 3}
   TopDirtBlock: {fileID: 8285843699734163249, guid: 3c7528cead2fcf546861227901120091,

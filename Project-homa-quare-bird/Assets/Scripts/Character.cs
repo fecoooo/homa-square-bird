@@ -298,12 +298,17 @@ public class Character : PhysicalObject
 
 	}
 
+	static int eggMaterialIndex = 0;
 	public void SpawnEgg()
 	{
 		//animator.SetTrigger("Jump");
 		Taptic.Success();
 
-		GameObject egg = Instantiate(GamePreferences.instance.egg);
+		GameObject egg = Instantiate(GamePreferences.instance.Egg);
+
+		egg.GetComponentInChildren<MeshRenderer>().material = GamePreferences.instance.EggMaterials[eggMaterialIndex];
+		eggMaterialIndex = (eggMaterialIndex + 1) % GamePreferences.instance.EggMaterials.Length;
+
 		float spawnX = transform.position.x;
 		egg.transform.position = new Vector3(spawnX, eggSpawnPositionYZ.y, eggSpawnPositionYZ.z);
 
