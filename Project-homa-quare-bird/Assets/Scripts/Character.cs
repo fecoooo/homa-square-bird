@@ -23,6 +23,21 @@ public class Character : PhysicalObject
 	LineRenderer laser;
 	Animator animator;
 
+	protected bool HasEggBelow
+	{
+		get
+		{
+			return verticalHitinfos != null &&
+			(verticalHitinfos.Item1.collider != null
+			&& verticalHitinfos.Item1.collider.tag == "Egg") ||
+			(verticalHitinfos.Item2.collider != null
+			&& verticalHitinfos.Item2.collider.tag == "Egg");/* ||
+			(verticalHitinfos.Item2.collider != null 
+			&& verticalHitinfos.Item2.collider.tag == "Egg");*/
+		}
+		set { }
+	}
+
 	protected Vector3 TopForwardPoint
 	{
 		get => MiddleFrontPoint + new Vector3(0, collider.bounds.extents.y + GamePreferences.instance.gravityPerFrame, 0);
@@ -35,6 +50,8 @@ public class Character : PhysicalObject
 	protected override void OnStart()
 	{
 		base.OnStart();
+
+		//Time.timeScale = .2f;
 
 		animator = transform.GetComponentInChildren<Animator>();
 
@@ -70,6 +87,13 @@ public class Character : PhysicalObject
 		}
 		else if (laser.enabled)
 			laser.enabled = false;
+
+		Debug.Log(HasEggBelow);
+		if (HasEggBelow)
+			animator.SetInteger("State", (int)AnimStates.Idle2);
+		else
+			animator.SetInteger("State", (int)AnimStates.Run);
+
 	}
 
 	private bool CanJump()
@@ -159,8 +183,8 @@ public class Character : PhysicalObject
 		switch (state)
 		{
 			case GameState.BeforeGame:
-				animator.SetBool("Run", false);
-				animator.SetBool("Idle", true);
+				animator.SetInteger("State", (int)AnimStates.Idle);
+
 				ClearEggs();
 				ResetPosition();
 				ResetProperies();
@@ -170,8 +194,6 @@ public class Character : PhysicalObject
 				Ready = true;
 				break;
 			case GameState.InGame:
-				animator.SetBool("Idle", false);
-				animator.SetBool("Run", true);
 				break;
 			case GameState.GameWon:
 				laser.enabled = false;
@@ -194,7 +216,7 @@ public class Character : PhysicalObject
 
 	public void SpawnEgg()
 	{
-		animator.SetBool("Jump Inplace", true);
+		//animator.SetTrigger("Jump");
 
 		GameObject egg = Instantiate(GamePreferences.instance.egg);
 		float spawnX = transform.position.x;
@@ -227,5 +249,13 @@ public class Character : PhysicalObject
 			Debug.Break();
 		}
 		instance = this;
+	}
+
+	enum AnimStates
+	{
+		Idle,
+		Idle2,
+		Walk,
+		Run
 	}
 }

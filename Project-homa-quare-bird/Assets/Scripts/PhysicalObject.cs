@@ -11,6 +11,8 @@ public class PhysicalObject:MonoBehaviour
 
 	new protected BoxCollider collider;
 
+	protected Tuple<RaycastHit, RaycastHit> verticalHitinfos = new Tuple<RaycastHit, RaycastHit>(new RaycastHit(), new RaycastHit());
+
 	protected bool frontCollision;
 	protected bool shouldUpdate;
 
@@ -47,7 +49,7 @@ public class PhysicalObject:MonoBehaviour
 			return;
 
 		SetHorizontalMovement();
-		SetVerticalMovement();
+		verticalHitinfos = SetVerticalMovement();
 
 		transform.position = nextMovePos;
 
