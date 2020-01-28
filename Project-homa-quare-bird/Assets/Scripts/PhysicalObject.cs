@@ -101,7 +101,7 @@ public class PhysicalObject:MonoBehaviour
 
 	public virtual void DestroyObject(int framesToWait = 2)
 	{
-		GetComponent<MeshRenderer>().enabled = false;
+		GetComponentInChildren<MeshRenderer>().enabled = false;
 		GetComponent<ParticleSystem>().Play();
 		StartCoroutine(DestroyObjectDelayedPart(framesToWait));
 	}

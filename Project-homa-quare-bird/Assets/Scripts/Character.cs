@@ -115,7 +115,7 @@ public class Character : PhysicalObject
 			else
 			{
 				timeinThisAnimState = 0;
-				animator.SetInteger("State", (int)AnimStates.Idle);
+				animator.SetInteger("State", (int)AnimStates.Walk);
 			}
 		}
 	}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee7bb0e796fba2a4aa106994980caa16, type: 3}
   m_Name: GamePreferences
   m_EditorClassIdentifier: 
-  egg: {fileID: 1217298017384481990, guid: 9e53c99a698948644bc5317a5d57f59f, type: 3}
+  egg: {fileID: 8005354171081558425, guid: 84b01e56c8835464e9507f2bcfd0d1fd, type: 3}
   DirtBlock: {fileID: 8285843699734163249, guid: 25caa5e684dcb0a42bac3e643c169164,
     type: 3}
   TopDirtBlock: {fileID: 8285843699734163249, guid: 3c7528cead2fcf546861227901120091,
@@ -28,4 +28,5 @@ MonoBehaviour:
   speed: 0.1
   bottomCheckDistance: 0.15
   forwardCheckDistance: 0.15
+  collisionErrorCorrection: 0.01
   scoreStep: 5
