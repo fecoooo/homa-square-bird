@@ -175,7 +175,6 @@ public class Character : PhysicalObject
 
 		shootParticleSystem.gameObject.SetActive(false);
 		//laser.enabled = false;
-		GetComponent<ParticleSystem>().Play();
 		animator.SetInteger("State", (int)AnimStates.Hit);
 		DelayedOnDestroyObject_IEnum = DelayedOnDestroyObject();
 		StartCoroutine(DelayedOnDestroyObject_IEnum);
@@ -184,6 +183,7 @@ public class Character : PhysicalObject
 	IEnumerator DelayedOnDestroyObject()
 	{
 		yield return new WaitForSeconds(HitAnim.length / 2);
+		GetComponent<ParticleSystem>().Play();
 		cat.gameObject.SetActive(false);
 	}
 
