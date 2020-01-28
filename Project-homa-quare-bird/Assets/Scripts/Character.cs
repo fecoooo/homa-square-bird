@@ -25,6 +25,8 @@ public class Character : PhysicalObject
 	LineRenderer laser;
 	Animator animator;
 
+	Transform cat;
+
 	protected bool Grounded
 	{
 		get
@@ -49,9 +51,13 @@ public class Character : PhysicalObject
 
 	public bool Ready { get; private set; }
 
+	const float TimeInAirThreshold = .25f;
+	float timeInAir;
+
 	protected override void OnStart()
 	{
 		base.OnStart();
+		cat = transform.Find("Cat");
 
 		animator = transform.GetComponentInChildren<Animator>();
 
@@ -70,7 +76,6 @@ public class Character : PhysicalObject
 		if (GameHandler.instance.CurrentState != GameState.InGame)
 			return;
 
-
 		if (Input.GetMouseButtonDown(0) && CanJump())
 		{
 			eggSpawnPositionYZ = transform.position;
@@ -88,7 +93,9 @@ public class Character : PhysicalObject
 		else if (laser.enabled)
 			laser.enabled = false;
 
-		if (Grounded || Falling)
+		timeInAir = Falling ? timeInAir + Time.deltaTime : 0;
+
+		if (Grounded || (Falling && timeInAir > TimeInAirThreshold))
 			animator.SetInteger("State", (int)AnimStates.Run);
 		else
 			animator.SetInteger("State", (int)AnimStates.Idle);
@@ -182,7 +189,7 @@ public class Character : PhysicalObject
 		{
 			case GameState.BeforeGame:
 				animator.SetInteger("State", (int)AnimStates.Idle);
-				transform.rotation = Quaternion.Euler(0, 90, 0);
+				cat.rotation = Quaternion.Euler(0, 100, 0);
 
 				ClearEggs();
 				ResetPosition();
@@ -226,13 +233,13 @@ public class Character : PhysicalObject
 		while(timePassed < RotateTowardsCameraAnimTime)
 		{
 			float t = timePassed / RotateTowardsCameraAnimTime;
-			transform.rotation = Quaternion.Euler(0, 90 + t * 90, 0);
+			cat.rotation = Quaternion.Euler(0, 90 + t * 90, 0);
 			timePassed += Time.deltaTime;
 
 			yield return null;
 		}
 
-		transform.rotation = Quaternion.Euler(0, 180, 0);
+		cat.rotation = Quaternion.Euler(0, 180, 0);
 
 		animator.SetInteger("State", (int)AnimStates.Jump);
 
