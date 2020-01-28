@@ -69,7 +69,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8005354171081558425}
   serializedVersion: 6
-  lengthInSec: 0.05
+  lengthInSec: 0.1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 3
@@ -218,24 +218,24 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 0.4509804, g: 0, b: 0.022065256, a: 1}
+        key0: {r: 1, g: 0.14473684, b: 0, a: 1}
+        key1: {r: 1, g: 0.47953218, b: 0, a: 1}
         key2: {r: 1, g: 0.9707602, b: 0, a: 0}
         key3: {r: 0, g: 1, b: 0.005847931, a: 0}
         key4: {r: 0, g: 0.7953217, b: 1, a: 0}
         key5: {r: 0, g: 0.0877192, b: 1, a: 0}
         key6: {r: 0.8596492, g: 0, b: 1, a: 0}
         key7: {r: 0.8596492, g: 0, b: 1, a: 0}
-        ctime0: 0
-        ctime1: 65535
+        ctime0: 871
+        ctime1: 11852
         ctime2: 22552
         ctime3: 31418
         ctime4: 41831
         ctime5: 54206
         ctime6: 65535
         ctime7: 65535
-        atime0: 0
-        atime1: 65535
+        atime0: 4241
+        atime1: 38165
         atime2: 65535
         atime3: 65535
         atime4: 0
@@ -243,7 +243,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
-        m_NumColorKeys: 2
+        m_NumColorKeys: 7
         m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
@@ -312,8 +312,8 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.3
-      minScalar: 0.3
+      scalar: 0.05
+      minScalar: 0.05
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -540,7 +540,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     maxNumParticles: 10000
-    size3D: 1
+    size3D: 0
     rotation3D: 0
     gravityModifier:
       serializedVersion: 2
@@ -4629,8 +4629,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0498f845c4346ff42b7390b9d86d16ac, type: 2}
   - {fileID: 2100000, guid: d8aacc719f0bdeb48b7e288b8ff671ed, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
