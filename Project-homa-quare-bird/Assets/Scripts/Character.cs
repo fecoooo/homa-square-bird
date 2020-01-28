@@ -28,6 +28,8 @@ public class Character : PhysicalObject
 	Animator animator;
 
 	Transform cat;
+	GameObject shootParticleSystem;
+
 	IEnumerator WaitFallThanRotateTowardsCamera_IEnum;
 
 	IEnumerator DelayedOnDestroyObject_IEnum;
@@ -52,7 +54,7 @@ public class Character : PhysicalObject
 		get => MiddleFrontPoint + new Vector3(0, collider.bounds.extents.y + GamePreferences.instance.gravityPerFrame, 0);
 	}
 
-	public bool IsShooting { get => laser.enabled; }
+	public bool IsShooting { get => shootParticleSystem.gameObject.activeSelf; }//laser.enabled; }
 
 	public bool Ready { get; private set; }
 
@@ -63,6 +65,7 @@ public class Character : PhysicalObject
 	{
 		base.OnStart();
 		cat = transform.Find("Cat");
+		shootParticleSystem = transform.Find("ShootParticleSystem").gameObject;
 
 		animator = transform.GetComponentInChildren<Animator>();
 
@@ -89,14 +92,16 @@ public class Character : PhysicalObject
 
 		if (currentShootTime > 0)
 		{
-			laser.SetPosition(0, transform.position);
-			laser.SetPosition(1, transform.position + new Vector3(ShootDistance, 0, 0));
+			shootParticleSystem.gameObject.SetActive(true);
+			//laser.SetPosition(0, transform.position);
+			//laser.SetPosition(1, transform.position + new Vector3(ShootDistance, 0, 0));
 			currentShootTime -= Time.deltaTime;
 			Map.instance.DestroyBlocks(Physics.RaycastAll(collider.bounds.center, new Vector3(1, 0, 0), ShootDistance));
 			//Debug.DrawLine(collider.bounds.center, collider.bounds.center + new Vector3(ShootDistance, 0, 0), Color.yellow);
 		}
-		else if (laser.enabled)
-			laser.enabled = false;
+		else if (shootParticleSystem.gameObject.activeSelf)
+			shootParticleSystem.gameObject.SetActive(false);
+			//laser.enabled = false;
 
 		timeinThisAnimState += Time.deltaTime;
 
@@ -122,7 +127,8 @@ public class Character : PhysicalObject
 
 	void StartShooting()
 	{
-		laser.enabled = true;
+		shootParticleSystem.gameObject.SetActive(true);
+		//laser.enabled = true;
 		currentShootTime = ShootTime;
 	}
 
@@ -167,7 +173,8 @@ public class Character : PhysicalObject
 		if (winColliderHit)
 			return;
 
-		laser.enabled = false;
+		shootParticleSystem.gameObject.SetActive(false);
+		//laser.enabled = false;
 		GetComponent<ParticleSystem>().Play();
 		animator.SetInteger("State", (int)AnimStates.Hit);
 		DelayedOnDestroyObject_IEnum = DelayedOnDestroyObject();
@@ -234,7 +241,9 @@ public class Character : PhysicalObject
 				ResetProperies();
 				currentJumpFrame = int.MaxValue;
 				currentShootTime = 0;
-				laser.enabled = false;
+				//laser.enabled = false;
+				shootParticleSystem.gameObject.SetActive(false);
+				
 				Ready = true;
 				break;
 			case GameState.InGame:
@@ -247,7 +256,8 @@ public class Character : PhysicalObject
 
 				currentJumpFrame = int.MaxValue;
 
-				laser.enabled = false;
+				shootParticleSystem.gameObject.SetActive(false);
+				//laser.enabled = false;
 				Ready = false;
 				break;
 			case GameState.GameLost:
