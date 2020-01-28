@@ -81,7 +81,7 @@ public class PhysicalObject:MonoBehaviour
 		{
 			if (hitInfo1.collider.bounds.Intersects(collider.bounds))
 			{
-				float possibleNewY = hitInfo1.collider.bounds.max.y + collider.bounds.extents.y;
+				float possibleNewY = hitInfo1.collider.bounds.max.y + collider.bounds.extents.y - GamePreferences.instance.collisionErrorCorrection;
 				nextMovePos.y = possibleNewY > nextMovePos.y ? possibleNewY : nextMovePos.y;
 			}
 		}
@@ -91,7 +91,7 @@ public class PhysicalObject:MonoBehaviour
 		{
 			if (hitInfo2.collider.bounds.Intersects(collider.bounds))
 			{
-				float possibleNewY = hitInfo2.collider.bounds.max.y + collider.bounds.extents.y;
+				float possibleNewY = hitInfo2.collider.bounds.max.y + collider.bounds.extents.y - GamePreferences.instance.collisionErrorCorrection;
 				nextMovePos.y = possibleNewY > nextMovePos.y ? possibleNewY : nextMovePos.y;
 			}
 		}

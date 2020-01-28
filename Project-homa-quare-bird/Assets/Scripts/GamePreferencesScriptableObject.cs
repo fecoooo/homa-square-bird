@@ -15,6 +15,7 @@ public class GamePreferencesScriptableObject: ScriptableObject
 	public float speed = .1f;
 	public float bottomCheckDistance = .15f;
 	public float forwardCheckDistance = .15f;
+	public float collisionErrorCorrection = .01f;
 
 	public int scoreStep = 5;
 }
