@@ -62,6 +62,7 @@ public class Map:MonoBehaviourSingleton<Map>
 		{
 			c.gameObject.SetActive(true);
 			yield return new WaitForSeconds(timeBetweenCannonShots);
+			Taptic.Success();
 			c.GetComponent<ParticleSystem>().Play();
 		}
 	}
