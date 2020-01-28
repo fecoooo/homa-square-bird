@@ -3,10 +3,12 @@ using UnityEngine.UI;
 
 public class Example : MonoBehaviour {
 
-    [SerializeField] Text text;
+#pragma warning disable CS0649, CS0414  
+	[SerializeField] Text text;
     [SerializeField] Image tapticImage;
     [SerializeField] Color on;
     [SerializeField] Color off;
+#pragma warning restore CS0649, CS0414  
 
     void Start() {
         text.text = Taptic.tapticOn ? "TURN OFF" : "TURN ON";

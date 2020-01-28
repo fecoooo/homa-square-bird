@@ -67,9 +67,11 @@ namespace Animmal.Animmals1
         public Button Death;
 
         int CurrentItemID = 0;
-        int CurrentSkinID = 0;
+#pragma warning disable CS0649, CS0414
+		int CurrentSkinID = 0;
+#pragma warning restore CS0649, CS0414
 
-        AssetsObject AssetsItem1;
+		AssetsObject AssetsItem1;
         AssetsObject AssetsItem2;
         int CurrentObjectOnStage = 0;
 
