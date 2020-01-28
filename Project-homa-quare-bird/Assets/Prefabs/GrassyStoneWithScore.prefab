@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -2584175926559665674}
   m_Layer: 0
   m_Name: GrassyStoneWithScore
-  m_TagString: Score
+  m_TagString: UnbreakableScore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -124,7 +124,7 @@ public class Map:MonoBehaviourSingleton<Map>
 		foreach(RaycastHit i in infos)
 		{
 			Block block = i.collider.GetComponent<Block>();
-			if (block != null)
+			if (block != null && (block.tag != "Unbreakable" || block.tag == "UnbreakableScore"))
 				block.DestroyBlock();
 		}
 	}

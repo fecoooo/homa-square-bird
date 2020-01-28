@@ -93,7 +93,7 @@ public class Character : PhysicalObject
 			laser.SetPosition(1, transform.position + new Vector3(ShootDistance, 0, 0));
 			currentShootTime -= Time.deltaTime;
 			Map.instance.DestroyBlocks(Physics.RaycastAll(collider.bounds.center, new Vector3(1, 0, 0), ShootDistance));
-			Debug.DrawLine(collider.bounds.center, collider.bounds.center + new Vector3(ShootDistance, 0, 0), Color.yellow);
+			//Debug.DrawLine(collider.bounds.center, collider.bounds.center + new Vector3(ShootDistance, 0, 0), Color.yellow);
 		}
 		else if (laser.enabled)
 			laser.enabled = false;
@@ -166,6 +166,8 @@ public class Character : PhysicalObject
 	{
 		if (winColliderHit)
 			return;
+
+		laser.enabled = false;
 		GetComponent<ParticleSystem>().Play();
 		animator.SetInteger("State", (int)AnimStates.Hit);
 		DelayedOnDestroyObject_IEnum = DelayedOnDestroyObject();
@@ -193,10 +195,10 @@ public class Character : PhysicalObject
 		{
 			Tuple <RaycastHit, RaycastHit> hitInfos = base.SetVerticalMovement();
 
-			if (hitInfos.Item1.collider != null && hitInfos.Item1.collider.gameObject.tag == "Score")
+			if (hitInfos.Item1.collider != null && (hitInfos.Item1.collider.gameObject.tag == "Score" || hitInfos.Item1.collider.gameObject.tag == "UnbreakableScore"))
 				GameHandler.instance.AddWithScore(hitInfos.Item1.collider.gameObject);
 
-			if (hitInfos.Item2.collider != null && hitInfos.Item2.collider.gameObject.tag == "Score")
+			if (hitInfos.Item2.collider != null && (hitInfos.Item2.collider.gameObject.tag == "Score" || hitInfos.Item2.collider.gameObject.tag == "UnbreakableScore"))
 				GameHandler.instance.AddWithScore(hitInfos.Item2.collider.gameObject);
 
 			return hitInfos;

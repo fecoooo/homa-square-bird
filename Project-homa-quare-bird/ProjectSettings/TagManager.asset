@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Score
   - Egg
+  - Unbreakable
+  - UnbreakableScore
   layers:
   - Default
   - TransparentFX
