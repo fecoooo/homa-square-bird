@@ -16,10 +16,13 @@ public class UIHandler:MonoBehaviour
 	TextMeshProUGUI middleMsgLbl;
 	TextMeshProUGUI bottomMsgLbl;
 
+	Image fadeImg;
+
 	IEnumerator gratitudeRoutine;
 
 	const float gratitudeAnimationTime = 1f;
 	const float scaleUpAnimModifier = 4f;
+	const float fadeAnimTime = .3f;
 
 	readonly string[] gratitudes = { "Superb!", "Magnific!", "Impressive!" };
 
@@ -37,6 +40,8 @@ public class UIHandler:MonoBehaviour
 
 		middleMsgLbl = transform.Find("MiddleMsgLbl").GetComponent<TextMeshProUGUI>();
 		bottomMsgLbl = transform.Find("BottomMsgLbl").GetComponent<TextMeshProUGUI>();
+
+		fadeImg = transform.Find("FadeImg").GetComponent<Image>();
 
 		GameHandler.instance.GameStateChanged += OnGameStateChanged;
 		GameHandler.instance.ScoreChanged += OnScoreChanged;
@@ -79,6 +84,12 @@ public class UIHandler:MonoBehaviour
 				middleMsgLbl.text = "Game Over";
 				bottomMsgLbl.gameObject.SetActive(true);
 				bottomMsgLbl.text = "Tap to restart";
+				break;
+			case GameState.FadeOut:
+				StartCoroutine(FadeOut());
+				break;
+			case GameState.FadeIn:
+				StartCoroutine(FadeIn());
 				break;
 			default:
 				break;
@@ -134,5 +145,44 @@ public class UIHandler:MonoBehaviour
 		middleMsgLbl.text = "Tap to start";
 
 		bottomMsgLbl.gameObject.SetActive(false);
+	}
+
+	IEnumerator FadeIn()
+	{
+		Color newColor = Color.white;
+
+		float timePassed = 0;
+		while (timePassed < fadeAnimTime)
+		{
+			float t = (timePassed / fadeAnimTime);
+			newColor.a = 1 - t;
+			fadeImg.color = newColor;
+
+			timePassed += Time.deltaTime;
+			yield return null;
+		}
+
+		newColor.a = 0;
+		fadeImg.color = newColor;
+		GameHandler.instance.OnFadeInCompleted();
+	}
+
+	IEnumerator FadeOut()
+	{
+		Color newColor = Color.white;
+
+		float timePassed = 0;
+		while (timePassed < fadeAnimTime)
+		{
+			float t = (timePassed / fadeAnimTime);
+			newColor.a = t;
+			fadeImg.color = newColor;
+
+			timePassed += Time.deltaTime;
+			yield return null;
+		}
+
+		fadeImg.color = Color.white;
+		GameHandler.instance.OnFadeOutCompleted();
 	}
 }

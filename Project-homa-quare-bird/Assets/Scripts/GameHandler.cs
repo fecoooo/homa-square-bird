@@ -32,7 +32,7 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 	{
 		PlayerPrefs.DeleteKey("CurrentLevel");
 
-		CurrentLevel = PlayerPrefs.GetInt("CurrentLevel", 10);
+		CurrentLevel = PlayerPrefs.GetInt("CurrentLevel", 11);
 
 		ScoreChanged += OnScoreChanged;
 		ConsecutiveScoreChanged += OnConsecutiveScoreChanged;
@@ -47,7 +47,7 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 			OnClick();
 
 		if (CurrentState == GameState.BeforeGame && Character.instance.Ready && Map.instance.Ready)
-			GameStateChanged(GameState.WaitingForInput);
+			GameStateChanged(GameState.FadeIn);
 	}
 
 	private void OnClick()
@@ -58,11 +58,14 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 				GameStateChanged(GameState.InGame);
 				break;
 			case GameState.GameWon:
-				GameStateChanged(GameState.BeforeGame);
+				GameStateChanged(GameState.FadeOut);
+				//GameStateChanged(GameState.BeforeGame);
 				break;
 			case GameState.GameLost:
-				GameStateChanged(GameState.BeforeGame);
+				GameStateChanged(GameState.FadeOut);
+				//GameStateChanged(GameState.BeforeGame);
 				break;
+
 			default:
 				break;
 		}
@@ -130,6 +133,16 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 	{
 		Vibration.Vibrate();
 	}
+
+	public void OnFadeOutCompleted()
+	{
+		GameStateChanged(GameState.BeforeGame);
+	}
+
+	internal void OnFadeInCompleted()
+	{
+		GameStateChanged(GameState.WaitingForInput);
+	}
 }
 public enum GameState
 {
@@ -138,4 +151,6 @@ public enum GameState
 	InGame,
 	GameWon,
 	GameLost,
+	FadeOut,
+	FadeIn,
 }
