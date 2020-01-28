@@ -8,6 +8,8 @@ public class Character : PhysicalObject
 	public int jumpFrames;
 	public float jumpHeight = 1f;
 
+	public AnimationClip HitAnim;
+
 	const float ShootDistance = 4f;
 	const float ShootTime = 5f;
 	float currentShootTime = 0f;
@@ -27,6 +29,8 @@ public class Character : PhysicalObject
 
 	Transform cat;
 	IEnumerator WaitFallThanRotateTowardsCamera_IEnum;
+
+	IEnumerator DelayedOnDestroyObject_IEnum;
 
 	protected bool Grounded
 	{
@@ -141,6 +145,7 @@ public class Character : PhysicalObject
 			{
 				if (hitInfo.collider.name == "WinCollider")
 				{
+					winColliderHit = true;
 					foreach (GameObject egg in allEggs)
 						egg.GetComponent<PhysicalObject>().DestroyObject(0);
 					GameHandler.instance.TriggerGameWon();
@@ -159,8 +164,18 @@ public class Character : PhysicalObject
 
 	public override void DestroyObject(int framesToWait = 2)
 	{
-		if(GameHandler.instance.CurrentState == GameState.InGame)
-			GetComponent<ParticleSystem>().Play();
+		if (winColliderHit)
+			return;
+		GetComponent<ParticleSystem>().Play();
+		animator.SetInteger("State", (int)AnimStates.Hit);
+		DelayedOnDestroyObject_IEnum = DelayedOnDestroyObject();
+		StartCoroutine(DelayedOnDestroyObject_IEnum);
+	}
+
+	IEnumerator DelayedOnDestroyObject()
+	{
+		yield return new WaitForSeconds(HitAnim.length / 2);
+		cat.gameObject.SetActive(false);
 	}
 
 	protected override Tuple<RaycastHit, RaycastHit> SetVerticalMovement()
@@ -198,8 +213,16 @@ public class Character : PhysicalObject
 		switch (state)
 		{
 			case GameState.BeforeGame:
+				winColliderHit = false;
+				cat.gameObject.SetActive(true);
+
+				if (DelayedOnDestroyObject_IEnum != null)
+					StopCoroutine(DelayedOnDestroyObject_IEnum);
+
 				if (WaitFallThanRotateTowardsCamera_IEnum != null)
 					StopCoroutine(WaitFallThanRotateTowardsCamera_IEnum);
+
+				animator.enabled = true;
 
 				animator.SetInteger("State", (int)AnimStates.Idle);
 				cat.rotation = Quaternion.Euler(0, 100, 0);
@@ -232,6 +255,8 @@ public class Character : PhysicalObject
 				break;
 		}
 	}
+
+	
 
 	void OnConsecutiveScoreChanged(int consecutiveScore)
 	{
@@ -287,6 +312,7 @@ public class Character : PhysicalObject
 
 
 	public static Character instance;
+	bool winColliderHit;
 
 	void Awake()
 	{
@@ -305,5 +331,6 @@ public class Character : PhysicalObject
 		Walk,
 		Run,
 		Jump,
+		Hit,
 	}
 }

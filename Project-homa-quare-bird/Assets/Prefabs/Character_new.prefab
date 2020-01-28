@@ -51,6 +51,7 @@ MonoBehaviour:
   drawDebug: 1
   jumpFrames: 5
   jumpHeight: 1
+  HitAnim: {fileID: 7400012, guid: ecb900ca4b414eae9053afe2b45f3656, type: 3}
 --- !u!65 &299852928
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -72,7 +73,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1755646104177140}
   serializedVersion: 6
-  lengthInSec: 0.05
+  lengthInSec: 0.35
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 3
@@ -4834,12 +4835,7 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: 96fdac6fe82276e43b03d8c485ce26b8,
         type: 2}
-    m_RemovedComponents:
-    - {fileID: 7438920494790619019, guid: 7ee25a1b263fc3d4eb98999eea8b1112, type: 3}
-    - {fileID: 6968132924571659338, guid: 7ee25a1b263fc3d4eb98999eea8b1112, type: 3}
-    - {fileID: -4600872882273593247, guid: 7ee25a1b263fc3d4eb98999eea8b1112, type: 3}
-    - {fileID: 6243392939294996731, guid: 7ee25a1b263fc3d4eb98999eea8b1112, type: 3}
-    - {fileID: 1460114311599394798, guid: 7ee25a1b263fc3d4eb98999eea8b1112, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ee25a1b263fc3d4eb98999eea8b1112, type: 3}
 --- !u!4 &659757352246880168 stripped
 Transform:
