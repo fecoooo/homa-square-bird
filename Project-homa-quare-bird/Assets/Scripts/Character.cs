@@ -18,24 +18,26 @@ public class Character : PhysicalObject
 
 	Vector3 spawnPosition;
 
+	const float RotateTowardsCameraAnimTime = .3f;
+
 	List<GameObject> allEggs = new List<GameObject>();
 
 	LineRenderer laser;
 	Animator animator;
 
-	protected bool HasEggBelow
+	protected bool Grounded
 	{
 		get
 		{
-			return verticalHitinfos != null &&
-			(verticalHitinfos.Item1.collider != null
-			&& verticalHitinfos.Item1.collider.tag == "Egg") ||
-			(verticalHitinfos.Item2.collider != null
-			&& verticalHitinfos.Item2.collider.tag == "Egg");/* ||
-			(verticalHitinfos.Item2.collider != null 
-			&& verticalHitinfos.Item2.collider.tag == "Egg");*/
+			return 
+			(verticalHitinfos.Item1.collider != null && verticalHitinfos.Item1.collider.tag != "Egg") ||
+			(verticalHitinfos.Item2.collider != null && verticalHitinfos.Item2.collider.tag != "Egg");
 		}
-		set { }
+	}
+
+	protected bool Falling
+	{
+		get => verticalHitinfos.Item1.collider == null && verticalHitinfos.Item2.collider == null;
 	}
 
 	protected Vector3 TopForwardPoint
@@ -50,8 +52,6 @@ public class Character : PhysicalObject
 	protected override void OnStart()
 	{
 		base.OnStart();
-
-		//Time.timeScale = .2f;
 
 		animator = transform.GetComponentInChildren<Animator>();
 
@@ -88,12 +88,10 @@ public class Character : PhysicalObject
 		else if (laser.enabled)
 			laser.enabled = false;
 
-		Debug.Log(HasEggBelow);
-		if (HasEggBelow)
-			animator.SetInteger("State", (int)AnimStates.Idle2);
-		else
+		if (Grounded || Falling)
 			animator.SetInteger("State", (int)AnimStates.Run);
-
+		else
+			animator.SetInteger("State", (int)AnimStates.Idle);
 	}
 
 	private bool CanJump()
@@ -184,6 +182,7 @@ public class Character : PhysicalObject
 		{
 			case GameState.BeforeGame:
 				animator.SetInteger("State", (int)AnimStates.Idle);
+				transform.rotation = Quaternion.Euler(0, 90, 0);
 
 				ClearEggs();
 				ResetPosition();
@@ -196,6 +195,10 @@ public class Character : PhysicalObject
 			case GameState.InGame:
 				break;
 			case GameState.GameWon:
+				animator.SetInteger("State", (int)AnimStates.Idle);
+
+				StartCoroutine(RotateTowardsCamera());
+
 				laser.enabled = false;
 				Ready = false;
 				break;
@@ -213,6 +216,27 @@ public class Character : PhysicalObject
 			StartShooting();
 	}
 
+
+	IEnumerator RotateTowardsCamera()
+	{
+		while (!Grounded)
+			yield return null;
+
+		float timePassed = 0;
+		while(timePassed < RotateTowardsCameraAnimTime)
+		{
+			float t = timePassed / RotateTowardsCameraAnimTime;
+			transform.rotation = Quaternion.Euler(0, 90 + t * 90, 0);
+			timePassed += Time.deltaTime;
+
+			yield return null;
+		}
+
+		transform.rotation = Quaternion.Euler(0, 180, 0);
+
+		animator.SetInteger("State", (int)AnimStates.Jump);
+
+	}
 
 	public void SpawnEgg()
 	{
@@ -256,6 +280,7 @@ public class Character : PhysicalObject
 		Idle,
 		Idle2,
 		Walk,
-		Run
+		Run,
+		Jump,
 	}
 }
