@@ -32,7 +32,7 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 	{
 		PlayerPrefs.DeleteKey("CurrentLevel");
 
-		CurrentLevel = PlayerPrefs.GetInt("CurrentLevel", 0);
+		CurrentLevel = PlayerPrefs.GetInt("CurrentLevel", 10);
 
 		ScoreChanged += OnScoreChanged;
 		ConsecutiveScoreChanged += OnConsecutiveScoreChanged;
