@@ -118,7 +118,7 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 		{
 			scoreBlocks.Add(scoreBlock);
 			score += GamePreferences.instance.scoreStep;
-			Taptic.Success();
+			Taptic.Failure();
 			if (!Character.instance.IsShooting)
 			{
 				consecutiveScore = (consecutiveScore + 1) % 3;

@@ -291,6 +291,7 @@ public class Character : PhysicalObject
 	public void SpawnEgg()
 	{
 		//animator.SetTrigger("Jump");
+		Taptic.Success();
 
 		GameObject egg = Instantiate(GamePreferences.instance.egg);
 		float spawnX = transform.position.x;
