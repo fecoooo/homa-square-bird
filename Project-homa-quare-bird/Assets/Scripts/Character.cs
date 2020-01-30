@@ -10,6 +10,11 @@ public class Character : PhysicalObject
 
 	public AnimationClip HitAnim;
 
+	public float ShootProgress
+	{
+		get => Mathf.Clamp01(currentShootTime / ShootTime);
+	}
+
 	const float ShootDistance = 4f;
 	const float ShootTime = 5f;
 	float currentShootTime = 0f;

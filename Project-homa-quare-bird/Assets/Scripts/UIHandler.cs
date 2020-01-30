@@ -24,9 +24,14 @@ public class UIHandler:MonoBehaviour
 	const float scaleUpAnimModifier = 4f;
 	const float fadeAnimTime = .3f;
 
+	Transform shootProgress;
+	Image shootProgressImg;
+
 	readonly string[] gratitudes = { "Superb!", "Magnific!", "Impressive!" };
 
 	readonly Color[] gratitudeColors = { Color.yellow, new Color(1f, 0.4f, 0), Color.red };
+
+	readonly Vector3 ShootProgressOffest = new Vector3(0, 150f, 0);
 
 	void Start()
 	{
@@ -43,21 +48,37 @@ public class UIHandler:MonoBehaviour
 
 		fadeImg = transform.Find("FadeImg").GetComponent<Image>();
 
+		shootProgress = transform.Find("ShootProgress");
+		shootProgressImg = transform.Find("ShootProgress/ProgressBarImg").GetComponent<Image>();
+
 		GameHandler.instance.GameStateChanged += OnGameStateChanged;
 		GameHandler.instance.ScoreChanged += OnScoreChanged;
 		GameHandler.instance.ConsecutiveScoreChanged += OnConsecutiveScoreChanged;
 
 	}
 
+	private void FixedUpdate()
+	{
+		if (Character.instance.IsShooting != shootProgress.gameObject.activeSelf)
+			shootProgress.gameObject.SetActive(Character.instance.IsShooting);
+
+		if (shootProgress.gameObject.activeSelf)
+		{
+			shootProgress.position = Camera.main.WorldToScreenPoint(Character.instance.transform.position) + ShootProgressOffest;
+			shootProgressImg.fillAmount = Character.instance.ShootProgress;
+		}
+	}
+
 	void Update()
 	{
+
 		if (GameHandler.instance.CurrentState == GameState.InGame)
 			UpdateProgress();
 	}
 
 	void UpdateProgress()
 	{
-		progressBarImg.transform.localScale = new Vector3(GameHandler.instance.Progress, 1, 1);
+		progressBarImg.fillAmount = GameHandler.instance.Progress;// transform.localScale = new Vector3(GameHandler.instance.Progress, 1, 1);
 		progressLbl.text = Mathf.CeilToInt(GameHandler.instance.Progress * 100) + "%";
 	}
 
@@ -134,7 +155,7 @@ public class UIHandler:MonoBehaviour
 	{
 		scoreLbl.text = "0";
 
-		progressBarImg.transform.localScale = new Vector3(0, 1, 1);
+		progressBarImg.fillAmount = 0;//.transform.localScale = new Vector3(0, 1, 1);
 		progressLbl.text = "0%";
 
 		currentStageLbl.text = (GameHandler.instance.CurrentLevel + 1).ToString();
