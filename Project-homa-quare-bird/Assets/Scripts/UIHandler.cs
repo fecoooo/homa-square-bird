@@ -57,7 +57,7 @@ public class UIHandler:MonoBehaviour
 
 	}
 
-	private void FixedUpdate()
+	private void LateUpdate()
 	{
 		if (Character.instance.IsShooting != shootProgress.gameObject.activeSelf)
 			shootProgress.gameObject.SetActive(Character.instance.IsShooting);
