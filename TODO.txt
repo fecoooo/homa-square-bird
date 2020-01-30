@@ -1,15 +1,12 @@
-USE HIGH QUALITY WHEN YOU SEND IT TO JUWON
-
-stone cannot be destroyed
-
 shoot time indicator
+level progress indicator bg
+
+screenshots, icon
+fb sdk
+ios build
+
+
+
 speed up on succesful shit
 indicate birds progress (3 birds till shoot)
 coins
-
-hatter 
-
-proper particles
-proper laser
-
-delta time alapjan movement
