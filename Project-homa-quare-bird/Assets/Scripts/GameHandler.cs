@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Facebook.Unity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,23 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 	}
 
 	public int CurrentLevel { get; private set; }
+
+	protected override void OnAwake()
+	{
+		base.OnAwake();
+		if (FB.IsInitialized)
+		{
+			FB.ActivateApp();
+		}
+		else
+		{
+			//Handle FB.Init
+			FB.Init(() =>
+			{
+				FB.ActivateApp();
+			});
+		}
+	}
 
 	private void Start()
 	{
@@ -66,6 +84,27 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 
 			default:
 				break;
+		}
+	}
+
+	void OnApplicationPause(bool pauseStatus)
+	{
+		// Check the pauseStatus to see if we are in the foreground
+		// or background
+		if (!pauseStatus)
+		{
+			//app resume
+			if (FB.IsInitialized)
+			{
+				FB.ActivateApp();
+			}
+			else
+			{
+				//Handle FB.Init
+				FB.Init(() => {
+					FB.ActivateApp();
+				});
+			}
 		}
 	}
 
