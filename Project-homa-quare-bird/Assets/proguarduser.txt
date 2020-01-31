@@ -1,2 +1,0 @@
--keep class com.facebook.internal.* {*;}
--keep class com.facebook.* {*;}
