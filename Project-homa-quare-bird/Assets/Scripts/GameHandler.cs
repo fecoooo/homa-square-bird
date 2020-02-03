@@ -167,6 +167,18 @@ public class GameHandler:MonoBehaviourSingleton<GameHandler>
 		}
 	}
 
+	internal void AddScore(int scoreTimes)
+	{
+		score += scoreTimes * GamePreferences.instance.scoreStep;
+		Taptic.Failure();
+		if (!Character.instance.IsShooting)
+		{
+			consecutiveScore = (consecutiveScore + 1) % 3;
+			ConsecutiveScoreChanged(consecutiveScore);
+		}
+		ScoreChanged(score);
+	}
+
 	public void Vibrate()
 	{
 		Vibration.Vibrate();

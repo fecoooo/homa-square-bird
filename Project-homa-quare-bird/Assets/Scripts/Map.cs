@@ -122,12 +122,19 @@ public class Map:MonoBehaviourSingleton<Map>
 
 	public void DestroyBlocks(RaycastHit[] infos)
 	{
+		int destroyedBlocks = 0;
 		foreach(RaycastHit i in infos)
 		{
 			Block block = i.collider.GetComponent<Block>();
 			if (block != null && (block.tag != "Unbreakable" || block.tag == "UnbreakableScore"))
+			{
 				block.DestroyBlock();
+				destroyedBlocks++;
+			}
 		}
+
+		if (destroyedBlocks > 0)
+			GameHandler.instance.AddScore(destroyedBlocks);
 	}
 
 	/*

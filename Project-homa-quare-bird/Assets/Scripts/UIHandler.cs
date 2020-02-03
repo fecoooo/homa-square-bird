@@ -19,10 +19,12 @@ public class UIHandler:MonoBehaviour
 	Image fadeImg;
 
 	IEnumerator gratitudeRoutine;
+	IEnumerator scoreFlashRoutineIEnum;
 
 	const float gratitudeAnimationTime = 1f;
 	const float scaleUpAnimModifier = 4f;
 	const float fadeAnimTime = .3f;
+	const float scoreFlashAnimTime = .3f;
 
 	Transform shootProgress;
 	Image shootProgressImg;
@@ -120,6 +122,34 @@ public class UIHandler:MonoBehaviour
 	void OnScoreChanged(int currentScore)
 	{
 		scoreLbl.text = currentScore.ToString();
+		if (scoreFlashRoutineIEnum != null)
+			StopCoroutine(scoreFlashRoutineIEnum);
+
+		scoreFlashRoutineIEnum = ScoreFlashRoutine();
+		StartCoroutine(scoreFlashRoutineIEnum);
+	}
+
+	IEnumerator ScoreFlashRoutine()
+	{
+		Color newColor = Color.white;
+
+		float timePassed = 0;
+		while (timePassed < scoreFlashAnimTime)
+		{
+			float t = (timePassed / scoreFlashAnimTime);
+			newColor = Color.Lerp(Color.yellow, Color.white, t);
+			newColor.a = t;
+			scoreLbl.color = newColor;
+
+			float currentScale = Mathf.Lerp(3f, 1f, t);
+			scoreLbl.transform.localScale = new Vector3(currentScale, currentScale, currentScale);
+
+			timePassed += Time.deltaTime;
+			yield return null;
+		}
+
+		newColor.a = 1;
+		scoreLbl.color = newColor;
 	}
 
 	void OnConsecutiveScoreChanged(int consecutiveScore)
@@ -154,6 +184,8 @@ public class UIHandler:MonoBehaviour
 	void InitLevel()
 	{
 		scoreLbl.text = "0";
+		scoreLbl.transform.localScale = Vector3.one;
+		scoreLbl.color = new Color(1, 1, 1, 1);
 
 		progressBarImg.fillAmount = 0;//.transform.localScale = new Vector3(0, 1, 1);
 		progressLbl.text = "0%";
